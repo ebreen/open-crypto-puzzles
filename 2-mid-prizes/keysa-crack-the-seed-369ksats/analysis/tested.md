@@ -135,9 +135,74 @@ on that basis, while noting the volume of testing.
 A pixel-level measurement on the binarized card image found that the gap after the
 first token, `mad`, is about 20 pixels wide, while every other inter-word gap on the
 card measures 9 to 13 pixels. This is the single typographic anomaly on the entire
-card, and it falls on the very first token. It is not itself a tested hypothesis,
-since no selection rule based on it has been derived and checked; it remains an open
-observation (see the README's open leads).
+card, and it falls on the very first token. Ordered readings that treat `mad` as a
+header, and the letter-key reading that uses its three initials, are now in L-007;
+no rule based on the gap has matched.
+
+## L-007: spoken 369 / drop-mad / two-column / keyword ordered readings
+
+L-002 only enumerated periodic gaps with periods 1 to 4. The note title
+"369369 Sats Guessing Game" (visible on the 2024 screenshot, see
+`clues/author-posts.md`) and the extra-wide gap after `mad` both argue for a
+short spoken rule that that sweep would have missed: every-k for k = 5 to 12,
+the 69-token stream that drops `mad` as a header, take-then-skip using 3/6/9,
+two fixed columns of the 6x12 padded grid, and 12-letter titles mapped to
+columns.
+
+Method: generate those ordered 12-word readings (card order of the selected
+positions, plus reverse), checksum-filter, derive BIP84 `m/84'/0'/0'/0/0` with
+the certified oracle. Also checked the most natural 369 take-skip, "take 3,
+skip 6, take 9", from every start, and the twelve first-of-display-line words
+in the 2024 narrower screenshot (a width-dependent reading, included only as a
+control).
+
+Result: 5,965 unique sequences from the arithmetic / grid / keyword families
+plus 3,548 from the take-skip / wrap-line families, 643 checksum-valid after
+the 1-in-16 filter, 0 address matches. The flagship "take 3, skip 6, take 9"
+from the first token is checksum-invalid. Rate: about 650 checksum-valid
+derivations per second on 4 CPU cores through `tools/oracle.py`. Date:
+2026-08-17.
+
+Witness: the enumerator re-found the constructed "take 3, skip 6, take 9 from
+start 1" sequence and the 12 wrap-line-first sequence in its own candidate set
+and evaluated both through the same `check()` path as every other candidate;
+the public BIP84 test vector run through `derive_address()` still returns
+`bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu`. I treat this family as
+witnessed for the ordered readings that were explicitly recovered.
+
+A letter-keyed reading suggested by the gap after `mad` (keep every token
+whose first letter is in `{m,a,d}`, dropping `mad` itself) also yields exactly
+12 tokens. All obvious orders of that set fail the checksum or, in one
+grouping, derive a different address. I did not 12!-permute it: a one-shot
+BlueWallet seed is overwhelmingly unlikely to have all 12 words sharing those
+initials, so the cardinality-12 hit is almost certainly from the decoys, not
+the selector.
+
+## L-008: self-referential and keyed jump walks
+
+Method: from every starting index on the 70-token stream and the 69-token
+drop-`mad` stream, walk 12 steps wrapping or not, with the step size taken
+from the current token (length, vowel count, consonant count, first or last
+letter value, vocabulary index modulo 9 or 12) or from a constant 3/6/9, and
+from repeating skip keys `369`, `62523`, `124875`, `MAD` letter numbers, and
+`BITCOIN` / `TESLA` / `KEYSA` / `SATOSHI`. Also a greedy knight's-tour of
+length 12 on the padded 6x12 grid from every start.
+
+Result: 5,808 unique sequences, 388 checksum-valid, 0 address matches. Rate:
+about 650 checksum-valid derivations per second, same oracle. Date: 2026-08-17.
+
+Witness: the public BIP84 vector still derives the standard address through
+the same `derive_address()` used to score candidates. I did not plant a
+synthetic MATCH at head/middle/tail of this jump family separately from L-007,
+so I mark the jump family uncertified even though the derivation path is the
+certified oracle.
+
+Three checksum-valid themed readings (every 3rd token starting at 3; the 12
+wrap-line-first words from the 2024 screenshot; one grouping of the
+MAD-initial set) were also derived at BIP84 indices 0 to 5 and with
+passphrases `369`, `369369`, and `mad`. All NO MATCH. That extra-path check is
+a small control, not a passphrase search: she has said she learned about
+passphrases after this wallet was made.
 
 ## Row-structure measurement (not a hypothesis test)
 
@@ -152,3 +217,74 @@ pixels) is far larger than the next word would have needed (129 to 196 pixels). 
 automatic reflow never leaves that much room unused, so the 6 logical rows are
 typed line breaks, not a rendering side effect. This supports treating row-based
 rules (two words per row, columns, diagonals) as legitimate rather than coincidental.
+
+## L-009: speakable row-block and alternative-stream ordered readings
+
+A cipher told out loud to a trusted person should yield the 12 words in seed
+order from the six typed rows, not from a linear every-k walk of the 70-token
+stream (already covered in L-002 and L-007). This family enumerates those
+ordered readings: first, last, middle, or skip-first n tokens of m rows where
+n times m is 12; the same two, three, or four columns of speakable row groups
+(all six, the four long rows, consecutive windows, odd or even rows); half-card
+6+6 concatenations with matching or mixed 369-shaped rules on each half; path
+readings of the 6x2 first-and-last matrix; arithmetic periods 1-12, take-skip
+369, and accumulating 369/date/vortex keys on boustrophedon, column-major,
+spiral, row-reversed, and bottom-up streams (LTR periods 1-12 left to L-007);
+and first/last of groups sized 3-6-9.
+
+Method: generate those ordered 12-word sequences, checksum-filter, derive
+BIP84 `m/84'/0'/0'/0/0` with the certified oracle. N = 7,560 unique sequences,
+about 1/16 checksum-valid, t well under two hours.
+
+Result: 7,560 unique sequences, 466 checksum-valid, 0 address matches. Rate:
+about 650 checksum-valid derivations per second on 4 CPU cores through
+`tools/oracle.py`. Date: 2026-08-17.
+
+Witness: the enumerator re-found constructed sequences (first two of each row;
+last two of each row; columns 3 and 6 of all six rows; columns 3, 6, 9 of the
+four long rows; columns 3, 6, 9, 12 of the first three rows; firsts-then-lasts;
+the 12 wrap-line-first words from the 2024 screenshot) in its own candidate
+set. The public BIP84 test vector still derives
+`bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu`. I treat this family as witnessed
+for the ordered readings that were explicitly recovered.
+
+A follow-up on the same streams checked every contiguous 12-token window and
+the reward-epoch skip key 6-3 from the "Satoshi's Numbers 369 Clock" chapter
+(alternating digital roots 6, 3, 6, 3). 718 unique sequences, 41
+checksum-valid, 0 matches. The first typed row as a contiguous seed is
+checksum-invalid, so it cannot be the BlueWallet mnemonic.
+
+## L-010: constrained orders of per-row pairs and 369 column windows
+
+If the cipher names a pair of columns on each line, a trusted person might
+still permute line order or flip the pair. That shrinks 12! to 6! times 2^6 =
+46,080 orders per pair-type, about 8 seconds of derivations after the checksum
+filter, so I ran it rather than leaving it for a GPU 12! sweep. I also
+exhausted every same-k-column take on speakable row groups (k=2 on all six
+rows, k=3 on four-row windows, k=4 on three-row windows, k=6 on two-row
+windows), and the within-row permutations of a short list of 369-shaped 3- and
+4-column takes.
+
+Method: for 13 pair-types (first-and-last, first two, last two, middle two,
+columns 3+6, 3+9, 6+9, 3+last, 6+last, 9+last, 1+6, 1+9, skip-first-then-two),
+enumerate every row permutation and every per-row pair flip; union with the
+same-column exhaustive takes and with (3!)^4 times 4! (resp. (4!)^3 times 3!)
+orders of themed 3-column (resp. 4-column) windows. Checksum-filter, then the
+certified oracle. N_raw = 5,203,141 generated 12-word sequences, N_valid =
+312,753 unique checksum-valid, D about 3,600 derivations per second, t about
+87 seconds.
+
+Result: 312,753 checksum-valid unique sequences, 0 address matches. Date:
+2026-08-17.
+
+Witness: the public BIP84 vector still derives the standard address. I planted
+the checksum-valid 2024 wrap-line-first sequence in this family's candidate
+set, recovered it, and got NO MATCH from the same `check()` path (it derives
+`bc1qmvzlhq3ywxvclaz90czthdm2sz0qdqefexdkxy`, not the escrow). Card-order
+first-and-last remains checksum-invalid, as in L-007.
+
+If the 12 words are the first and last of each row, they are not grouped as
+six pairs in any line order. A full 12! of that set is still unrun here
+(t a little over two hours on this CPU). Same-column two-per-row in a
+speakable reading order is now a negative, including the 3-6-9 takes on the
+four long rows.

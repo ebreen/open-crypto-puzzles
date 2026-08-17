@@ -2398,7 +2398,7 @@
           "label": "main",
           "explorer": "https://mempool.space/address/bc1qcv84707v4sglaj306qezkcrun4eejh77k8cyjr",
           "expected": "369369 sats",
-          "verified_on": "2026-08-16",
+          "verified_on": "2026-08-17",
           "verified_state": "funded-unspent"
         }
       ],
@@ -2414,10 +2414,10 @@
         "certified_against": "the public BIP39/BIP84 test vector (mnemonic 'abandon' repeated 11 times plus 'about'), since no solved sibling exists for this puzzle"
       },
       "difficulty_left": "insight",
-      "difficulty_note": "the derivation is fully understood and the mechanical and structural search space is thoroughly mapped (669,858 positional readings, 479,001,600 orderings of the 12 dotless tokens, 572,368 semantic selections, 105 intrinsic-property criteria, 36 acrostic selections, all negative); the selection rule is described by the author as short, memorable, and meant to be spoken aloud to a trusted person, which argues the missing piece is an unrecovered insight or a fact only the author has stated, not more compute",
+      "difficulty_note": "the derivation is fully understood and the mechanical and structural search space is thoroughly mapped (669,858 positional readings, 479,001,600 orderings of the 12 dotless tokens, 572,368 semantic selections, 105 intrinsic-property criteria, 36 acrostic selections, 9,513 spoken 369/drop-mad/two-column/keyword ordered readings, 5,808 self-referential jump walks, 7,560 speakable row-block and alt-stream readings, 5,203,141 constrained per-row pair orders and 369 column windows, all negative); the note is titled 369369 Sats Guessing Game and the obvious spoken 369 selectors, including 3-6-9 of the long rows and the reward-epoch skip 6-3, are now negatives in card order; the selection rule is described by the author as short, memorable, and meant to be spoken aloud to a trusted person, which argues the missing piece is an unrecovered insight or a fact only the author has stated, not more compute",
       "tested_total": {
-        "candidates": 480243967,
-        "families": 5,
+        "candidates": 485469989,
+        "families": 9,
         "certified": false
       },
       "leads": [
@@ -2435,13 +2435,13 @@
         },
         {
           "rank": 3,
-          "title": "the two-tokens-per-row bounded sweep",
+          "title": "the two-tokens-per-row independent sweep (same-column speakable orders now negative)",
           "cost": "hours",
           "status": "open"
         },
         {
           "rank": 4,
-          "title": "the double-width gap after mad, and the 369-clock theme",
+          "title": "the double-width gap after mad, and the 369-clock theme (obvious 369 spoken rules now negative)",
           "cost": "needs-new-information",
           "status": "open"
         }
@@ -2459,6 +2459,18 @@
           "sha256": "f0eb1eab738be7bbc6088530e6f50b500f00cea368b26720af011ab9743ad4c7",
           "source": "https://i.nostr.build/qYkB.jpg",
           "archived": null
+        },
+        {
+          "path": "clues/JkkBUuPyMHGcX0wB.jpg",
+          "sha256": "e91916a289ea0b29f80bcdb3bb16cfc537d922ba3776ab6bcdf5f834ec2874aa",
+          "source": "https://i.nostr.build/JkkBUuPyMHGcX0wB.jpg",
+          "archived": null
+        },
+        {
+          "path": "clues/Q0aXztimD5PbhDUQ.jpg",
+          "sha256": "2a02c2c30f818ef2e28d3da3eaca822e921100c3e02df86231aed2803b23e5cf",
+          "source": "https://i.nostr.build/Q0aXztimD5PbhDUQ.jpg",
+          "archived": null
         }
       ],
       "sources": [
@@ -2473,10 +2485,16 @@
           "url": "https://njump.me/npub1dpna3xwwddnhhzg9ycpvlcz2ze0jdwm2rf3eqd2lf9leaewtq7tqhw0ef2",
           "date": "2026-08-16",
           "archived": null
+        },
+        {
+          "title": "Keysa, 2024-11-12 repost (note title visible)",
+          "url": "https://njump.me/note13akmmtx96kyqvavmptu2wes0jawj0ad5ypp4v9sa9qf60zlr3dqqnf3h4d",
+          "date": "2024-11-12",
+          "archived": null
         }
       ],
-      "third_party_material": "the two card images in clues/ are the author's own published puzzle material, posted on X and mirrored on nostr.build; her book and workshop materials are not included and are referenced by title only",
-      "last_updated": "2026-08-16",
+      "third_party_material": "the card images in clues/ are the author's own published puzzle material, posted on X and Nostr and mirrored on nostr.build; her book and workshop materials are not included and are referenced by title only",
+      "last_updated": "2026-08-17",
       "folder": "2-mid-prizes/keysa-crack-the-seed-369ksats"
     },
     {

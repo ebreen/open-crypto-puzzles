@@ -21,7 +21,7 @@ short, spoken rule rather than a hidden calculation.
 | Prize | 369,369 sats (about $233 at BTC = $63,000, 2026-08-16) |
 | Chain | bitcoin |
 | Escrow | `bc1qcv84707v4sglaj306qezkcrun4eejh77k8cyjr` ([explorer](https://mempool.space/address/bc1qcv84707v4sglaj306qezkcrun4eejh77k8cyjr)) |
-| Last on-chain check | 2026-08-16: funded and unspent (369,369 sats) |
+| Last on-chain check | 2026-08-17: funded and unspent (369,369 sats) |
 | Status | OPEN |
 | Puzzle type | bip39-seed, word-selection |
 | Target format | BIP39 12 words (English), BIP84 `m/84'/0'/0'/0/0`, no passphrase |
@@ -37,6 +37,11 @@ Keysa posted two images on 2023-06-26: a ciphertext card with 70 words
 the real seed, and "you can ignore the dots." Twenty-five minutes later she
 clarified an earlier remark: "The only hint is that it's a 12 word seed," meaning 12
 words rather than 24, not "this puzzle among several of mine."
+
+A 2024-11-12 notes-app screenshot of the same card (`clues/JkkBUuPyMHGcX0wB.jpg`)
+shows the note's own title: **369369 Sats Guessing Game**. The matching BlueWallet
+screenshot from that post (`clues/Q0aXztimD5PbhDUQ.jpg`) labels the wallet
+**Crack the Seed Game HD SegWit...**, which matches BIP84.
 
 In later posts she added detail without giving the rule away. On 2024-11-12: "a good
 way to travel with your seed... you need an unforgettable way to decipher it," and,
@@ -93,7 +98,7 @@ both correctly rejected. Reproduced 2026-08-16.
 
 ### Established facts
 
-1. The escrow is funded and unspent as of 2026-08-16 (checked via
+1. The escrow is funded and unspent as of 2026-08-17 (checked via
    [mempool.space](https://mempool.space)), 3 years after publication.
 2. The author never published the escrow address; I identified it by matching the
    announced amount, 369,369 sats, against a full blockchain balance dump, then
@@ -110,6 +115,9 @@ both correctly rejected. Reproduced 2026-08-16.
 6. The checksum passes at the expected background rate (about 1 in 16) across every
    sweep run against this token set, confirming no bias in the derivation pipeline
    and confirming the checksum cannot discriminate a correct selection here.
+7. The notes-app title of the card is "369369 Sats Guessing Game" (2024-11-12
+   screenshot). The BlueWallet account name is "Crack the Seed Game" and the type
+   string is HD SegWit, consistent with BIP84.
 
 ## What has been tested
 
@@ -122,12 +130,16 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Semantic and mnemonic candidate selections (L-006) | 572,368 selections (439,773 distinct sets) | agent-driven candidate proposals under 114 labeled families, checked against the oracle | 0 match | uncertified: no single search order to plant a witness in | 2026-08-02 |
 | Intrinsic token properties, including 3-6-9 digital roots (L-004) | 105 criteria | test whether any criterion partitions the 70 tokens into exactly 12 | no criterion reaches 12 (closest: 11 or 13) | uncertified: structural computation, not an oracle sweep | 2026-08-02 |
 | Acrostic (initials spell a word) (L-003) | 1,723 composable 12-letter words | subsequence test against the 70 initials | 36 realizable, 0 match | uncertified: self-tested but no formal witness | 2026-08-02 |
+| Spoken 369 / drop-mad / two-column / keyword readings (L-007) | 9,513 unique ordered sequences | AP periods 1-12, take-skip 3/6/9, 6x12 two-column, title-to-column, wrap-line control | 643 checksum-valid, 0 match | yes: constructed take-3-skip-6-take-9 and wrap-line sequences re-found and oracle-checked | 2026-08-17 |
+| Self-referential and keyed jump walks (L-008) | 5,808 unique sequences | jump by token length / letters / 369 keys / greedy knight | 388 checksum-valid, 0 match | uncertified: certified oracle, no planted MATCH in this family's search order | 2026-08-17 |
+| Speakable row-block and alt-stream readings (L-009) | 7,560 unique sequences | first/last/middle n of m rows, same columns of speakable row groups, half-card 6+6, 6x2 paths, boustrophedon and column-major 369 walks | 466 checksum-valid, 0 match | yes: constructed first-two, 3-6-9-of-long-rows, and wrap-line sequences re-found | 2026-08-17 |
+| Constrained per-row pair orders and 369 windows (L-010) | 5,203,141 generated sequences (312,753 checksum-valid unique) | 6! times 2^6 orders of 13 pair-types; exhaustive same-column takes; within-row orders of 3- and 4-column 369 windows | 0 match | yes: planted wrap-line-first sequence recovered, oracle NO MATCH | 2026-08-17 |
 
-Cumulative: about 480 million objects enumerated across 5 families (mixed units:
+Cumulative: about 485 million objects enumerated across 9 families (mixed units:
 orderings, readings, selections, criteria, acrostic candidates), 0 matches.
 
-![Horizontal log-scale bars for the 5 tested-hypothesis families, colored by witness status](images/02-coverage-tested-space.png)
-*Figure 2. Coverage of the 5 tested hypothesis families, sized by objects enumerated and colored by witness status (source: data/coverage.csv, script tools/fig_coverage.py), 2026-08-16.*
+![Horizontal log-scale bars for the 9 tested-hypothesis families, colored by witness status](images/02-coverage-tested-space.png)
+*Figure 2. Coverage of the 9 tested hypothesis families, sized by objects enumerated and colored by witness status (source: data/coverage.csv, script tools/fig_coverage.py), 2026-08-17.*
 
 ## Open leads, ranked
 
@@ -140,14 +152,18 @@ orderings, readings, selections, criteria, acrostic candidates), 0 matches.
    rather than selection, and Keysa's reply engages with counting permutations
    rather than correcting the framing. Checking one full 12! ordering sweep for a
    well-argued candidate set costs about 38 seconds on a rented GPU; the bottleneck
-   is proposing the candidate set, not the derivation.
-3. **The two-tokens-per-row bounded sweep** (about 76 minutes on one rented GPU).
-   With the 6 rows confirmed authorial, picking exactly 2 tokens per row gives about
-   3.6 billion candidates after the BIP39 checksum filter, at a measured rate of
-   about 790,000 derivations per second.
+   is proposing the candidate set, not the derivation. The first-and-last-of-each-row
+   set is weaker than it looked: card order and the 6! times 2^6 pair-grouped orders
+   are all negative or checksum-invalid (L-007, L-010).
+3. **The two-tokens-per-row independent sweep** (about 76 minutes on one rented
+   GPU). Same-column two-per-row, including every column pair on all six rows, is
+   now a negative (L-009, L-010). What remains is picking any 2 tokens per row,
+   about 3.6 billion candidates after the checksum filter.
 4. **The double-width gap after "mad," and the "369 clock" theme** (needs new
-   information). The only typographic anomaly on the card, and a real anchor in the
-   author's own book, neither of which has produced a working selector yet.
+   information). The note is titled "369369 Sats Guessing Game"; the obvious spoken
+   369 selectors (take 3 skip 6 take 9, every 3rd from 3, columns 3 and 6, 3-6-9 of
+   the long rows, reward-epoch skip 6-3) are now negatives in card order. The gap
+   after `mad` likewise has no working selector yet.
 
 ## Files in this folder
 
@@ -155,13 +171,15 @@ orderings, readings, selections, criteria, acrostic candidates), 0 matches.
 |---|---|
 | `clues/L9rQ.jpg` | the ciphertext card as published, byte-exact from nostr.build |
 | `clues/qYkB.jpg` | the balance-proof card as published, byte-exact from nostr.build |
+| `clues/JkkBUuPyMHGcX0wB.jpg` | 2024-11-12 notes-app screenshot of the same card, including the title "369369 Sats Guessing Game" |
+| `clues/Q0aXztimD5PbhDUQ.jpg` | 2024-11-12 BlueWallet screenshot, "Crack the Seed Game HD SegWit..." |
 | `clues/author-posts.md` | dated quotes from Keysa's public posts, with links |
 | `data/card-tokens.txt` | my transcription of the 70-token card, 6 rows, dots marked |
-| `data/coverage.csv` | counts and witness status for the 5 tested hypothesis families |
+| `data/coverage.csv` | counts and witness status for the 9 tested hypothesis families |
 | `analysis/tested.md` | the complete negatives ledger |
 | `analysis/leads.md` | full notes behind the 4 ranked leads |
 | `images/01-annotated-card-grid.png` | the published card plus a rendered transcription with dotless tokens outlined |
-| `images/02-coverage-tested-space.png` | coverage bar chart of the 5 tested hypothesis families |
+| `images/02-coverage-tested-space.png` | coverage bar chart of the 9 tested hypothesis families |
 | `tools/oracle.py` | candidate checker, certified against the public BIP39/BIP84 test vector |
 | `tools/fig_card_grid.py` | generates images/01-annotated-card-grid.png from clues/L9rQ.jpg and data/card-tokens.txt |
 | `tools/fig_coverage.py` | generates images/02-coverage-tested-space.png from data/coverage.csv |
@@ -170,4 +188,5 @@ orderings, readings, selections, criteria, acrostic candidates), 0 matches.
 
 - Keysa, original announcement, X, 2023-06-26: https://x.com/SimplestBTCBook/status/1673197111603519490
 - Keysa on Nostr: https://njump.me/npub1dpna3xwwddnhhzg9ycpvlcz2ze0jdwm2rf3eqd2lf9leaewtq7tqhw0ef2
+- Keysa, 2024-11-12 repost of the card (note title visible): https://njump.me/note13akmmtx96kyqvavmptu2wes0jawj0ad5ypp4v9sa9qf60zlr3dqqnf3h4d
 - "The Simplest Bitcoin Book Ever Written," Keysa: https://simplestbitcoinbook.com

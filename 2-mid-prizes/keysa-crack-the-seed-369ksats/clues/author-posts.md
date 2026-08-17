@@ -18,6 +18,16 @@ funding transaction confirmed 2 minutes 28 seconds later, at 05:13:20 UTC.
 
 ## 2024-11-12
 
+She reposted the same note and a later BlueWallet screenshot on Nostr, in a thread
+about traveling with a seed. The note, opened in the notes app rather than cropped
+to the word block, has the title **369369 Sats Guessing Game**. The BlueWallet
+header on that screenshot reads **Crack the Seed Game HD SegWit...**, which is
+independent confirmation that the wallet is native SegWit (BIP84). The 2024
+screenshots are `clues/JkkBUuPyMHGcX0wB.jpg` (the note, including the title) and
+`clues/Q0aXztimD5PbhDUQ.jpg` (the wallet). At that narrower width the six typed
+rows wrap onto twelve display lines, with leftover space on the wrapped lines, the
+same evidence already used to treat the six rows as authorial.
+
 > "A good way to travel with your seed... you need an unforgettable way to decipher
 > it."
 
@@ -27,6 +37,11 @@ funding transaction confirmed 2 minutes 28 seconds later, at 05:13:20 UTC.
 > cipher as well." The selection rule is meant to be short enough to say out loud.
 
 > "Many tried but so far the sats are still there."
+
+> On splitting a seed for travel, in the same thread: "or give half to one person
+> and half to another" and, separately, "add a passphrase you memorize and carry
+> the seed plain text in two parts." The passphrase remark is a later alternative,
+> not a claim that this wallet has one.
 
 ## 2025-03-05
 
