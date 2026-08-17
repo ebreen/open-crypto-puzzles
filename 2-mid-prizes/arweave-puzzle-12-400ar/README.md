@@ -5,10 +5,10 @@ announced it on Twitter on 2020-05-05: one jigsaw image with 4 pieces feeding a 
 free-text field. The author confirmed the answer is exactly 58 characters and
 case-sensitive. I certified the decrypt pipeline against a solved sibling and read
 piece 3 as `2111011` from the page's own printed numbers. Colour-name and hex flag
-readings, the 18-character investor names they force, companies and species named after
-a whale, and the printed order of the five letters, went through the certified oracle:
-794,659 candidates, 0 match. The open gap is a flag reading that is not English colour
-words or RRGGBB, which would give the whale piece a different length.
+readings, the 18-character investor names they force, named-whale tokens, printed letter
+order, and short IQ tokens paired with long investor concatenations, went through the
+certified oracle: 959,443 candidates, 0 match. The open gap is a flag reading that is
+not colour words, hex, or a short IQ token from that list.
 
 ## At a glance
 
@@ -110,29 +110,29 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Same families plus colour initials and the 29-digit shape dump, all 24 piece orders | 368,283 | certified oracle | 0 match | uncertified | 2026-08-17 |
 | Named-whale family: Blue as a standalone IQ answer; BlueWhaleCapital, BalaenopteraMusculus, HargreavesLansdown | 205,923 | certified oracle | 0 match | uncertified | 2026-08-17 |
 | Printed letter order (IEANL, ILEAN, INEAL, AELIN) instead of the Alien anagram | 63,723 | certified oracle | 0 match | uncertified | 2026-08-17 |
+| Short IQ tokens (Blue, White, and neighbours) x complementary-length investor concatenations | 164,784 | certified oracle | 0 match | uncertified | 2026-08-17 |
 
-Cumulative: 794,659 assembled 58-character candidates tested against the escrow, 0
+Cumulative: 959,443 assembled 58-character candidates tested against the escrow, 0
 matches. The 18-character whale length is an artefact of assuming piece 1 is 28
-colour-name characters; that partition, and the hex partitions that replace it, missed.
+colour-name characters. Short IQ tokens such as `Blue` paired with the long
+investor concatenations that partition requires also missed.
 
 ## Open leads, ranked
 
-1. **Re-read piece 1 as something other than colour names or hex** (hours). The
-   58-character budget only forces piece 2 to 18 characters if piece 1 is the six colour
-   names including Blue (28) and pieces 3 and 4 stay at 7 and 5. That partition, the hex
-   partitions that go with it, and Blue as a standalone IQ-test answer paired with the
-   short whale tokens already in the list, all missed. Solved siblings use a proper noun,
-   a notation, or a count, not the literal drawn object, so a short IQ token such as
-   `Blue` would force a long complementary whale string (42 characters with `2111011` and
-   `Alien`) that the earlier list never contained. Confirmed by an oracle MATCH. Killed
-   by a new piece-1 rule as tight as the hexagon digit rule that still produces no hit.
-2. **Piece 2 is still a proper noun, but not the exhausted a16z / Blue Whale Capital
-   list** (hours). The whale plus 16-03-2020 still points at the Forbes Arweave article
-   of that date. What has been killed is the specific tokens `AndreessenHorowitz`,
-   `a16z`, `16-03-2020`, `BlueWhaleCapital`, `BalaenopteraMusculus`, and
-   `HargreavesLansdown` in every 24-order assembly with the piece-1 families above. A
-   headline token, a concatenation of the three co-investors, or a string that only
-   works once piece 1's length is revised, remains open. Confirmed by an oracle MATCH.
+1. **Re-read piece 1 as a notation as tight as the hexagon digit rule** (hours). Colour
+   names, hex, colour initials, `000111`, and short IQ tokens (`Blue`, `White`, `Navy`,
+   `Cyan`, `Azure`, `RGB`, `CMYK`, `Primary`, `Additive`, `Missing`, `Indigo`) have all
+   missed, including the complementary-length investor concatenations those short tokens
+   force. What is left is an encoding of the flag attributes (ball, side, height, tilt)
+   that is not one of those strings, or a single token not on that list. Confirmed by an
+   oracle MATCH. Killed by a piece-1 rule as tight as `2111011` that still produces no hit.
+2. **Piece 2 is still a proper noun, but not the exhausted investor concatenations**
+   (hours). The whale plus 16-03-2020 still points at the Forbes Arweave article of that
+   date. What has been killed is `AndreessenHorowitz`, `a16z`, `16-03-2020`,
+   `BlueWhaleCapital`, `BalaenopteraMusculus`, `HargreavesLansdown`, and the 2-3 atom
+   concatenations of those investors with dates and Forbes headline tokens, in every
+   24-order assembly with the piece-1 families above. A string that only works once
+   piece 1's length is revised remains open. Confirmed by an oracle MATCH.
 3. **Confirm piece 4 is Alien with an oracle hit** (hours). `Alien` is still the natural
    anagram of the five printed letters. Visual order (`IEANL` and three neighbours) was
    checked against the same piece-1 and piece-2 lists and also missed. Hatching-as-order

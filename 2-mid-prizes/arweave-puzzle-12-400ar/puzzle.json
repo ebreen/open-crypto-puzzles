@@ -41,11 +41,11 @@
     "certified_against": "solved sibling Arweave Puzzle Weave #8 (answer RasputinWilhelmAlekhine), reproduced byte-for-byte against the puzzle's own decrypt routine"
   },
   "difficulty_left": "insight",
-  "difficulty_note": "mechanism and oracle fully certified; piece 3 is 2111011 with certainty; colour-name, hex, 18-character investor, named-whale, and printed-letter-order assemblies missed (794,659 candidates, 0 match); the open gap is a flag reading that is not English colour words or RRGGBB",
-  "tested_total": { "candidates": 794659, "families": 8, "certified": true },
+  "difficulty_note": "mechanism and oracle fully certified; piece 3 is 2111011 with certainty; colour-name, hex, named-whale, printed-letter-order, and short-IQ-plus-long-investor assemblies missed (959,443 candidates, 0 match); the open gap is a flag reading that is not colour words, hex, or a short IQ token from that list",
+  "tested_total": { "candidates": 959443, "families": 9, "certified": true },
   "leads": [
-    { "rank": 1, "title": "re-read piece 1 as a short IQ-test token (Blue) or other non-colour-name encoding, which forces a long complementary whale string", "cost": "hours", "status": "open" },
-    { "rank": 2, "title": "piece 2 is still a proper noun, but not the exhausted a16z / Blue Whale Capital / BalaenopteraMusculus list", "cost": "hours", "status": "open" },
+    { "rank": 1, "title": "re-read piece 1 as a notation as tight as the hexagon digit rule; colour names, hex, 000111, and short IQ tokens including Blue all missed", "cost": "hours", "status": "open" },
+    { "rank": 2, "title": "piece 2 is still a proper noun, but not the exhausted 2-3 atom investor/date/Forbes concatenations", "cost": "hours", "status": "open" },
     { "rank": 3, "title": "confirm piece 4 is Alien with an oracle hit; visual letter order already missed", "cost": "hours", "status": "open" }
   ],
   "solutions": [],

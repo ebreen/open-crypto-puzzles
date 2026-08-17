@@ -19,6 +19,7 @@ dated 2026-08-17.
 | 8 | Same families plus colour initials and the 29-digit dump of all four shape codes, all 24 piece orders | 368,283 | 0 match |
 | 9 | Named-whale family: Blue as a standalone IQ answer; BlueWhaleCapital, BalaenopteraMusculus, HargreavesLansdown, and related tokens | 205,923 | 0 match |
 | 10 | Printed letter order instead of the Alien anagram (IEANL, ILEAN, INEAL, AELIN), 4 piece orders, piece 3 = 2111011 | 63,723 | 0 match |
+| 11 | IQ-long family: short IQ tokens (Blue, White, Navy, Cyan, Azure, RGB, CMYK, Primary, Additive, Missing, Indigo, 000111) x complementary-length 2-3 atom investor/date/Forbes concatenations, 24 orders, piece 3 = 2111011, piece 4 = Alien/Aline | 164,784 | 0 match |
 
 Also refuted, not a candidate sweep: steganography in the jigsaw JPEG and the page's
 favicon (no EXIF or XMP metadata, 0 trailing bytes after the JPEG end marker, `zsteg -a`
@@ -27,13 +28,15 @@ full transaction history was paged to exhaustion; the only asset near the fundin
 publication window is a PNG image byte-identical to sibling puzzle #11's, not a hint
 specific to #12.
 
-Rows 7-10 used `tools/search_whale.py` and the certified oracle with a first-block
+Rows 7-11 used `tools/search_whale.py` and the certified oracle with a first-block
 reject. Head, middle, and tail planted 58-character strings were re-found in-stream
 on every run; they are pipeline witnesses, not MATCH witnesses. Rate on this host was
-about 104 candidates/s on 4 cores.
+about 104 to 105 candidates/s on 4 cores. Row 11: N=164,784, D=105/s, t=1,570s,
+2026-08-17.
 
-Cumulative: 794,659 assembled 58-character candidates tested against the escrow, 0
+Cumulative: 959,443 assembled 58-character candidates tested against the escrow, 0
 matches. Piece 3's hexagon reading `2111011` is still the only sub-answer I would
 call certain. The 18-character whale length is an artefact of assuming piece 1 is
-28 colour-name characters; that assumption, and the hex partitions that replace it,
-have now been run without a hit.
+28 colour-name characters. Short IQ tokens such as `Blue` paired with
+complementary-length investor concatenations (the partition the 18-character
+assumption had left empty) also missed.
