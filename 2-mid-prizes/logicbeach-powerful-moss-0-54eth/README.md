@@ -9,7 +9,7 @@ paid out to real solvers. I confirmed the carrier for this one is not the audio,
 BIP39 wordlist as wrapped text, where each hour's numeral marks a word and the 12 hours give
 the order. 3 of the 12 hours read with no ambiguity; the other 9 are pinned to about 3
 candidate words each because a numeral spans roughly 2 text rows on the only resolution the
-image exists at. Over 3.3 million candidate 12-word combinations have been tested against the
+image exists at. Over 11.6 million candidate 12-word combinations have been tested against the
 winner wallet, all negative, and no higher-resolution source of the image is known to exist.
 
 ## At a glance
@@ -26,7 +26,7 @@ winner wallet, all negative, and no higher-resolution source of the image is kno
 | Puzzle type | image-stego, bip39-seed, word-selection, smart-contract |
 | Target format | BIP39 12 words (English), BIP44 `m/44'/60'/0'/0/0`, no passphrase, address must equal the winner wallet |
 | Certified oracle | yes: `tools/oracle.py --selftest` (certified against the public BIP39 KAT address and the artist's prior solved "Bifurcations" BIP84 vector) |
-| What remains | resolving the exact word for 9 of the 12 clock hours, each currently narrowed to about 3 candidates by a row-position ambiguity on the published image |
+| What remains | a selector other than "the word under the clock numeral": centroid, bottom-pixel, outer-rim, and one-hour-widen families are closed; sunburst-ray length is still open |
 | Series | none |
 
 ## The puzzle as published
@@ -117,21 +117,20 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Asymmetric row window per ordering | 531,441 combinations per ordering | same oracle | 0 match | yes | 2026-06-17 |
 | Wider row window refinement | about 8.6e8 estimated, sampled | same oracle | 0 match on sample | yes | 2026-06-17 |
 | Distinct-overlay and higher-resolution-source hypotheses | full image | histogram analysis, source hunt | both refuted | yes | 2026-06-17 |
+| Bottom-of-numeral and outer-rim re-reads, plus or minus 1 row, 4 orderings | 2,125,764 combinations each | visual re-read, then BIP44 `m/44'/60'/0'/0/0` | 0 match | yes | 2026-08-17 |
+| Widen one hour at a time to a 5-to-7-word column window | 2,781,864 combinations across 12 runs | 9-path oracle sweep | 0 match | yes | 2026-08-17 |
+| Published pools plus 16 overlay / artist-name passphrases | 1,259,712 combinations | BIP44 `m/44'/60'/0'/0/0` with passphrase | 0 match | yes | 2026-08-17 |
 
-Cumulative: over 3.3 million candidate combinations tested against the winner wallet, 0
+Cumulative: over 11.6 million candidate combinations tested against the winner wallet, 0
 matches. Lyric tokens on 2 tracks were deliberately not fed to the oracle: no mechanism selects
 which 12 of them would be the seed, so this is untested rather than negative.
 
 ## Open leads, ranked
 
-1. **Re-run the grid enumeration at a wider row window, one doubtful hour at a time** (hours).
-   Start with the hours clipped at the frame edge. Confirmed if an opened hour yields a match;
-   killed for the numeral-overlay reading once every doubtful hour is widened with no match.
-2. **Resample at the numeral's bottom pixel instead of its centroid** (minutes). A cheap
-   re-measurement that changes the candidate set for some hours before repeating the same
-   4-ordering sweep.
-3. **Test the sunburst ray length as an alternative per-hour selector** (hours). The 24 rays
-   have measurably varying length, never tested as a selection or ordering signal.
+1. **Test the sunburst ray length as an alternative per-hour selector** (hours). The 24 rays
+   have measurably varying red-pixel counts; that has not yet been turned into a word-selection
+   or ordering rule. The numeral-bottom, outer-rim, and one-hour-widen families are now closed
+   (see analysis/tested.md).
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -144,7 +143,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `data/tracks.json` | the album's 12 track titles, exactly as published in the NFT metadata |
 | `data/seed-grid.json` | the 12-hour seed grid state (confirmed words, candidate words) |
 | `analysis/tested.md` | the complete negatives ledger |
-| `analysis/leads.md` | full notes behind the 3 ranked leads |
+| `analysis/leads.md` | full notes behind the remaining lead |
 | `images/01-seed-grid.svg` | the seed grid figure |
 | `tools/oracle.py` | candidate checker, BIP44 path sweep, certified |
 | `tools/fig_seed_grid.py` | generates images/01-seed-grid.svg from data/seed-grid.json |

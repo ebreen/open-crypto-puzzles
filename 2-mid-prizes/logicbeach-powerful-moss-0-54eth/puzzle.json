@@ -44,12 +44,10 @@
     "certified_against": "the public BIP39 all-zero-entropy test vector and the artist's own prior solved 'Bifurcations' BIP84 vector"
   },
   "difficulty_left": "insight",
-  "difficulty_note": "the carrier (the POAP clock image, not the audio), the order (clock position), and the derivation path are all confirmed; 3 of 12 hours read with no ambiguity and over 3.3 million combinations of the rest have been tested negative; the blocker is a resolution limit on the only known copy of the image (a numeral spans about 2 text rows, so 9 of 12 hours carry about 3 candidate words each), not raw compute, so an unrecovered insight into the exact readout rule or a finer source is what remains",
-  "tested_total": { "candidates": 3319137, "families": 3, "certified": true },
+  "difficulty_note": "the carrier (the POAP clock image, not the audio), the order (clock position), and the derivation path are all confirmed; 3 of 12 hours read with no ambiguity; centroid, bottom-pixel, outer-rim, and one-hour-widen families are closed (about 11.6 million combinations, 0 match); the remaining lead is a sunburst-ray selection or ordering rule, or a constraint that shrinks a multi-hour widen below the two-hour cap",
+  "tested_total": { "candidates": 11612241, "families": 7, "certified": true },
   "leads": [
-    { "rank": 1, "title": "re-run the grid enumeration at a wider row window, one doubtful hour at a time", "cost": "hours", "status": "open" },
-    { "rank": 2, "title": "resample at the numeral's bottom pixel instead of its centroid", "cost": "minutes", "status": "open" },
-    { "rank": 3, "title": "test the sunburst ray length as an alternative per-hour selector", "cost": "hours", "status": "open" }
+    { "rank": 1, "title": "test the sunburst ray length as an alternative per-hour selector", "cost": "hours", "status": "open" }
   ],
   "solutions": [],
   "artifacts": [
@@ -63,5 +61,5 @@
     { "title": "2021 ETH puzzle write-up (prior puzzle, method precedent only)", "url": "https://l0gicbeach.medium.com/logicbeach-eth-album-puzzle-2021-57acaf1910db", "date": "2026-08-16", "archived": null }
   ],
   "third_party_material": "the POAP artwork in clues/ is the author's own published puzzle material; the album audio, video, and stems are the artist's commercial work and are not included, only our own text findings about them; the 2 prior-puzzle write-ups are cited by URL for method precedent, not reproduced",
-  "last_updated": "2026-08-16"
+  "last_updated": "2026-08-17"
 }

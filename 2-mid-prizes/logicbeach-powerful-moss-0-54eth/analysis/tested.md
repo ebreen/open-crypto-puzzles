@@ -28,6 +28,12 @@ even though the identical toolbox worked on the prior one.
 | Distinct-overlay hypothesis (12 words marked by a different color or intensity) | full image histogram | gray-intensity and hue histogram analysis | refuted: exactly 1 gray text population, only 2 non-gray hue families (the red sunburst spokes, the yellow title and signature); no marking of any kind at any of the 12 numeral positions | yes (direct pixel measurement) | 2026-06-17 |
 | Higher-resolution or vector source | prize contract tokenURI, POAP asset server, artist website, album video | direct fetch and comparison | refuted: the 2004x2011 raster in this folder is the finest source found anywhere; the album video is 1080p, lower resolution than the plot | yes | 2026-06-17 |
 | Calibration against a known-answer "Bifurcations" POAP | POAP GraphQL query for any drop with "bifurcation" in its name | direct API query | refuted: 0 drops match; no known-answer clock image exists for this artist to reverse-engineer the readout rule from | yes | 2026-06-17 |
+| Bottom-of-numeral readout: each hour's word taken from the text row under the glyph's lowest pixel, plus or minus 1 row, 4 canonical orderings | 2,125,764 combinations (531,441 per ordering; 132,627 checksum-valid) | visual re-read of all 12 numerals on `clues/powerfulmoss-poap.png`, then BIP44 `m/44'/60'/0'/0/0` only | 0 match, 113.5 seconds, 18,722 combinations/s | yes: a checksum-valid phrase from this generator was derived to its own address and re-found through the same checker | 2026-08-17 |
+| Outer-rim readout: each hour's word taken from the text toward the circle edge of that numeral, plus or minus 1 row, 4 canonical orderings | 2,125,764 combinations (133,370 checksum-valid) | same method as the bottom-pixel family | 0 match, 111.2 seconds, 19,112 combinations/s | yes: same planted-witness procedure | 2026-08-17 |
+| Widen one hour at a time to a 5-to-7-word column window (centroid plus or minus 2 or 3 rows), keep every other hour at the published pool, 4 canonical orderings, all 12 hours | 2,781,864 combinations across 12 separate runs (hours 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12); checksum-valid about 6.3 percent | `tools/oracle.py` 9-path neighbor sweep | 0 match | yes: each run planted a checksum-valid phrase from its own generator and re-found it | 2026-08-17 |
+| Published centroid pools plus a wallet passphrase taken from the yellow overlay and artist name (`lead`, `moss`, `powerful moss`, `logicbeach`, `clock`, `poap`, and case variants; 16 strings) | 1,259,712 combinations (80,304 checksum-valid) | BIP44 `m/44'/60'/0'/0/0` with each passphrase | 0 match, 88.4 seconds | yes: checksum-valid phrase plus passphrase `lead` derived and re-checked | 2026-08-17 |
+
+The 2026-08-17 bottom-pixel, outer-rim, and passphrase families compare only the canonical path `m/44'/60'/0'/0/0`, not the 9-path neighbor sweep. A hit on a non-default account or index would have been missed there. The one-hour widen family used the full 9-path sweep.
 
 ## Explicitly not fed to the oracle
 
@@ -39,8 +45,9 @@ as untested, not as a negative.
 
 ## Summary
 
-Across the POAP-image family, 1,193,373 plus 531,441 times 4 plus a sampled 8.6e8-sized space
-have been checked, 0 matches, 0 partial hits. The clock-and-grid mechanism itself (order from
-the hour position, word from the wordlist cell the numeral overlays) is confirmed by 3 hours
-that read with no row ambiguity at all; what remains open is resolving the row for the other 9
-hours past plus-or-minus 1, which the published 2004-pixel raster does not resolve further.
+Across the POAP-image family, the earlier 1,193,373 plus 531,441 times 4 plus a sampled
+8.6e8-sized space, and the 2026-08-17 addition of 8,293,104 combinations (bottom-pixel,
+outer-rim, one-hour widen, and overlay passphrases), have been checked, 0 matches, 0 partial
+hits. Sampling the numeral at its centroid, its bottom pixel, or its outer rim, and opening
+any single hour to a wider column window, is not enough. What remains is a different selector
+(the sunburst rays, or a rule that moves several hours at once) or a finer source of the plot.
