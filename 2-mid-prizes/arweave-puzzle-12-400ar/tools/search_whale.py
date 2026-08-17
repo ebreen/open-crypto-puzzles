@@ -279,9 +279,10 @@ def main():
     parser.add_argument("--limit", type=int, default=0, help="cap candidates (0 = all)")
     parser.add_argument(
         "--family",
-        choices=("all", "named-whale"),
+        choices=("all", "named-whale", "letters"),
         default="all",
-        help="named-whale: only Blue-only IQ answers and companies/species named after a whale",
+        help="named-whale: Blue-only IQ answers and companies/species named after a whale; "
+             "letters: printed letter order instead of the Alien anagram",
     )
     args = parser.parse_args()
     if args.selftest:
@@ -303,6 +304,17 @@ def main():
         short_p1 = [x for x in p1 if len(x) <= 6]
         cands = list(set(assemble(p1, sorted(named_c), PIECE3, PIECE4))
                      | set(assemble(short_p1, p2, PIECE3, PIECE4)))
+    elif args.family == "letters":
+        # Visual reading orders of I,E,A,N,L rather than the Alien anagram.
+        global ORDERS
+        ORDERS = (
+            (0, 1, 2, 3),
+            (1, 0, 2, 3),
+            (0, 1, 3, 2),
+            (0, 2, 1, 3),
+        )
+        p4 = ("IEANL", "ILEAN", "INEAL", "AELIN", "ieanl", "ilean")
+        cands = assemble(p1, p2, ("2111011",), p4)
     else:
         cands = assemble(p1, p2, PIECE3, PIECE4)
     cands.sort()
