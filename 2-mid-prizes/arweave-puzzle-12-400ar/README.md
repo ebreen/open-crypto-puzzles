@@ -1,16 +1,14 @@
 # Arweave Puzzle Weave #12 (400.00248121 AR, [OPEN])
 
 Tiamat (@ArweaveP) published this puzzle on the Arweave permaweb on 2020-04-29 and
-announced it on Twitter on 2020-05-05: a single jigsaw image with 4 pieces (a row of
-flags, a whale beside a date, geometric shapes carrying digit strings, and 5 hatched
-letters), feeding one free-text field into the same decrypt routine used across this
-author's series. The author confirmed the answer is exactly 58 characters and
-case-sensitive. I reversed and certified the decrypt pipeline against a solved sibling
-puzzle, and solved one of the 4 sub-answers with certainty from the page's own printed
-numbers. A second sub-answer has a strong but unconfirmed reading, a third is refuted as
-an ordering scheme, and the fourth, a company or investor named after a whale, has not
-been identified. About 157,000 assembled 58-character candidates have been tested with 0
-matches.
+announced it on Twitter on 2020-05-05: one jigsaw image with 4 pieces feeding a single
+free-text field. The author confirmed the answer is exactly 58 characters and
+case-sensitive. I certified the decrypt pipeline against a solved sibling and read
+piece 3 as `2111011` from the page's own printed numbers. Colour-name and hex flag
+readings, the 18-character investor names they force, named-whale tokens, printed letter
+order, and short IQ tokens paired with long investor concatenations, went through the
+certified oracle: 959,443 candidates, 0 match. The open gap is a flag reading that is
+not colour words, hex, or a short IQ token from that list.
 
 ## At a glance
 
@@ -21,12 +19,12 @@ matches.
 | Prize | 400.00248121 AR (about $724 at AR = $1.81, 2026-08-16) |
 | Chain | arweave |
 | Escrow | `XRGEfkMbCMHeTY9mZI9Lh6hf8EmA8RstmBFUjDm40fg` ([explorer](https://viewblock.io/arweave/address/XRGEfkMbCMHeTY9mZI9Lh6hf8EmA8RstmBFUjDm40fg)) |
-| Last on-chain check | 2026-08-16: funded and unspent, 400002481210000 winston, 0 outgoing transactions ever |
+| Last on-chain check | 2026-08-17: funded and unspent, 400002481210000 winston, 0 outgoing transactions ever |
 | Status | OPEN |
 | Puzzle type | word-selection, geometry, text-cipher |
 | Target format | one 58-character case-sensitive answer, 4 sub-answers concatenated with no separator, SHA-512 x11513, AES-decrypt to an Arweave JWK keyfile |
 | Certified oracle | yes: `tools/oracle.py --selftest` (certified against solved sibling Arweave Puzzle Weave #8) |
-| What remains | piece 2's exact 18-character string, and an oracle-confirmed hit on piece 1 |
+| What remains | a flag reading other than colour names or hex, which sets the whale string's length |
 | Series | Arweave Puzzles (this folder covers puzzle #12 only) |
 
 ## The puzzle as published
@@ -82,7 +80,7 @@ JavaScript decryptor running under Node, on both matching and non-matching passp
 ### Established facts
 
 1. The escrow is funded and unspent: 400.00248121 AR, checked via
-   `arweave.net/wallet/<address>/balance` on 2026-08-16; a GraphQL query for the wallet's
+   `arweave.net/wallet/<address>/balance` on 2026-08-17; a GraphQL query for the wallet's
    own transaction history returns 0 outgoing transactions ever.
 2. The author confirmed the answer is exactly 58 characters, case-sensitive.
 3. Piece 3 is solved with certainty: the shapes read as `2111011` (spelling HEXAGON, one
@@ -108,25 +106,37 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | "BLUE" literal readings (6 bounded runs: orders, spellings, cases, anagrams) | 3,266 | certified oracle | 0 match | uncertified | 2026-07-25 |
 | Literal Hexagon / BalaenopteraMusculus / number-reordering partitions | 1,824 | certified oracle | 0 match | uncertified | 2026-07-25 |
 | Piece 1 as RGB decimal or hex numbers instead of color words | 768 | certified oracle | 0 match | uncertified | 2026-07-25 |
+| Colour names and hex flags x a16z / date / 18-char names, 4 piece orders | 47,343 | certified oracle | 0 match, superseded by the 24-order run | uncertified | 2026-08-17 |
+| Same families plus colour initials and the 29-digit shape dump, all 24 piece orders | 368,283 | certified oracle | 0 match | uncertified | 2026-08-17 |
+| Named-whale family: Blue as a standalone IQ answer; BlueWhaleCapital, BalaenopteraMusculus, HargreavesLansdown | 205,923 | certified oracle | 0 match | uncertified | 2026-08-17 |
+| Printed letter order (IEANL, ILEAN, INEAL, AELIN) instead of the Alien anagram | 63,723 | certified oracle | 0 match | uncertified | 2026-08-17 |
+| Short IQ tokens (Blue, White, and neighbours) x complementary-length investor concatenations | 164,784 | certified oracle | 0 match | uncertified | 2026-08-17 |
 
-Cumulative: 156,730 assembled 58-character candidates tested against the escrow, 0
-matches.
+Cumulative: 959,443 assembled 58-character candidates tested against the escrow, 0
+matches. The 18-character whale length is an artefact of assuming piece 1 is 28
+colour-name characters. Short IQ tokens such as `Blue` paired with the long
+investor concatenations that partition requires also missed.
 
 ## Open leads, ranked
 
-1. **Identify piece 2, "the whale"** (hours). With piece 1's length forced to 28 (blank
-   flag read as Blue) and piece 3 fixed at 7, piece 2 is forced to exactly 18 characters;
-   the natural reading, `AndreessenHorowitz` (the investment firm's March 2020 $8.3
-   million round, reported by Forbes on the same date drawn on the piece), fails in every
-   order and case tried. A co-investor, a ticker, or a string derived from the date
-   itself would each keep the 58-character budget intact. Confirmed by an oracle hit;
-   killed only by exhausting every plausible naming of the round.
-2. **Confirm piece 1's blank flag as Blue with an oracle hit** (hours). The flag
-   structure is certain: 3 vertical pairs, each an opposite-attribute pair (ball or no
-   ball, left or right side, top or bottom height); the reading that a missing additive
-   RGB primary color fills the blank, and that it is Blue, is currently favored only
-   because it is the one 4-letter completion that keeps the 58-character total exact,
-   not because any candidate has matched yet.
+1. **Re-read piece 1 as a notation as tight as the hexagon digit rule** (hours). Colour
+   names, hex, colour initials, `000111`, and short IQ tokens (`Blue`, `White`, `Navy`,
+   `Cyan`, `Azure`, `RGB`, `CMYK`, `Primary`, `Additive`, `Missing`, `Indigo`) have all
+   missed, including the complementary-length investor concatenations those short tokens
+   force. What is left is an encoding of the flag attributes (ball, side, height, tilt)
+   that is not one of those strings, or a single token not on that list. Confirmed by an
+   oracle MATCH. Killed by a piece-1 rule as tight as `2111011` that still produces no hit.
+2. **Piece 2 is still a proper noun, but not the exhausted investor concatenations**
+   (hours). The whale plus 16-03-2020 still points at the Forbes Arweave article of that
+   date. What has been killed is `AndreessenHorowitz`, `a16z`, `16-03-2020`,
+   `BlueWhaleCapital`, `BalaenopteraMusculus`, `HargreavesLansdown`, and the 2-3 atom
+   concatenations of those investors with dates and Forbes headline tokens, in every
+   24-order assembly with the piece-1 families above. A string that only works once
+   piece 1's length is revised remains open. Confirmed by an oracle MATCH.
+3. **Confirm piece 4 is Alien with an oracle hit** (hours). `Alien` is still the natural
+   anagram of the five printed letters. Visual order (`IEANL` and three neighbours) was
+   checked against the same piece-1 and piece-2 lists and also missed. Hatching-as-order
+   was already refuted structurally.
 
 ## Files in this folder
 
@@ -134,7 +144,9 @@ matches.
 |---|---|
 | `clues/puzzle-image.jpg` | the published jigsaw puzzle image, byte-exact |
 | `analysis/tested.md` | the complete negatives ledger |
+| `analysis/leads.md` | ranked open leads |
 | `tools/oracle.py` | candidate checker: 58-character answer to JWK address, certified against the solved sibling #8 |
+| `tools/search_whale.py` | bounded assembler: flag, whale, shape, and letter families through the certified oracle |
 
 ## Sources
 
