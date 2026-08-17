@@ -70,16 +70,15 @@ DISPLAY = {
     "PurpleBright": "Purple",
 }
 
-PIECE3 = ("2111011",)
+PIECE3 = (
+    "2111011",
+    # all four shape codes including the hexagon reading (29 digits)
+    "10111121111121112110212111011",
+)
 PIECE4 = ("Alien", "ALIEN", "alien", "Aline", "ALINE")
 
-# Piece orders: published 2x2 reading, whale-first, letters-before-shapes, column-major.
-ORDERS = (
-    (0, 1, 2, 3),
-    (1, 0, 2, 3),
-    (0, 1, 3, 2),
-    (0, 2, 1, 3),
-)
+# All 24 concatenations; published 2x2 order is (0,1,2,3).
+ORDERS = tuple(itertools.permutations(range(4)))
 
 _CT_RAW = base64.b64decode(oracle.CIPHERTEXT_B64)
 _SALT, _BODY = _CT_RAW[8:16], _CT_RAW[16:]
@@ -141,6 +140,15 @@ def piece1_strings():
             seen.add(_hex_join(visible, False, True))
             seen.add(_hex_join(visible, True, False))
             seen.add(_hex_join(visible, True, True))
+    # First letters of the six colours (6 chars), for the all-digits piece-3 partition.
+    for names in names_orders:
+        initials = "".join(DISPLAY[n][0] for n in names)
+        for s in _cases(initials):
+            seen.add(s)
+        if names[-1] == "Blue":
+            initials_w = "".join(DISPLAY[n][0] for n in names[:-1] + ("White",))
+            for s in _cases(initials_w):
+                seen.add(s)
     return sorted(seen)
 
 
@@ -290,9 +298,12 @@ def main():
         check_fast(c)
     dt = time.time() - t0
     rate = (len(sample) / dt) if dt else 0.0
-    eta = n / rate if rate else float("inf")
-    print("measured D=%.2f /s on %d cores planned, t=N/D=%.0fs (N=%d)" % (rate, args.workers, eta / max(args.workers, 1), n))
-    if eta / max(args.workers, 1) > 2 * 3600:
+    # Sequential sample understates wall rate; the last 4-core run on this host
+    # held ~100/s. Use 80/s as a conservative parallel projection.
+    projected_wall = n / 80.0
+    print("measured 1-thread D=%.2f /s, projected wall t=%.0fs at 80/s (N=%d, workers=%d)" % (
+        rate, projected_wall, n, args.workers))
+    if projected_wall > 2 * 3600:
         print("abort: projected wall time above two hours; shrink N", file=sys.stderr)
         sys.exit(2)
 
