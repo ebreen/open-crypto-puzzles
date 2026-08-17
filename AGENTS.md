@@ -84,3 +84,28 @@ files; run it with `--check` to see whether the index is stale without writing a
 This file only. Every other file in this repository (`README.md`, folder pages, `docs/`,
 `CONTRIBUTING.md`) is written in my own voice, as the person who did the research, and does
 not mention which software or model produced any finding.
+
+## Cursor Cloud specific instructions
+
+This is a pure Python 3 CLI repository: no web app, server, automated test framework, lint
+config, or CI. "Running the app" means running the tools in `tools/` and the per-puzzle
+`tools/oracle.py`. Verification is: `python3 tools/validate.py` (whole-repo QA, expect
+`0 failed`), any folder's `python3 <folder>/tools/oracle.py --selftest` (must print
+`SELFTEST OK`), the three `tools/derive.py` self-check vectors documented at the top of
+`tools/derive.py`, and `python3 tools/build_index.py --check`.
+
+- The startup update script installs `tools/requirements.txt` plus `mnemonic`. The
+  `mnemonic` package is not listed in `tools/requirements.txt` but is imported by
+  `2-mid-prizes/ftpk-season-2-300usdt/tools/oracle.py` and
+  `2-mid-prizes/ftpk-season-4-166usdc/tools/oracle.py`; without it, whole-repo
+  `validate.py` fails check 11 for those two folders only.
+- `tools/validate.py --folder` takes a repo-relative path (e.g.
+  `2-mid-prizes/corey-phillips-kitten-passphrase-1msats`), not a bare slug, despite the
+  `<slug>` shorthand used elsewhere in this file.
+- Whole-repo `validate.py` reports one expected `[WARN]` (a French leftover in
+  `archive/dead-ends/objective-thune-licorne-0-21btc/README.md`). A warning is not a
+  failure; the exit code is 0 as long as `0 failed`.
+- `tools/check_escrows.py` needs network egress to public blockchain explorers. Egress is
+  limited here, so some addresses return `ERROR (network, not a verdict)` or connection
+  resets while others return real balances. A network error is explicitly not a verdict; do
+  not treat it as an unfunded/swept escrow.
