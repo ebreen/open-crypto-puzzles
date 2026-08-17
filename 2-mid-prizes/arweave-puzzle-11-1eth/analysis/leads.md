@@ -1,17 +1,18 @@
 # Open leads, ranked
 
-## 1. A hatch or value-band reading that yields hex text, not a 32-byte pixel window (insight)
+## 1. A hatch cipher that is not band-length or column-nibble maps (insight)
 
 The author's "format does not matter" reply, and the separate remark about storing a
 private key as "a weird image in your email account," still point at pixel content
-rather than PNG chunks. Consecutive LSB, raw 8-bit windows, 2D LSB/ink tiles, and
-downsampled thumbnails are now ruled out (see `analysis/tested.md`): 40,596,966 sliding
-32-byte windows plus 6,571 prefix/thumbnail candidates, 0 match, witnessed. What
-remains is a reading of the drawing itself that produces 64 hex characters as text:
-hatch direction and count inside the 12 buildings and the large sail, or a value-band
-that renders as glyphs rather than packing to 32 bytes. Confirms: a 64-hex string taken
-from that reading derives the target exactly. Kills: a complete, witnessed enumeration
-of one named visual encoding with 0 match.
+rather than PNG chunks. Consecutive LSB, raw 8-bit windows, 2D tiles, downsampled
+thumbnails, and hatch-band / column-nibble maps are now ruled out (see
+`analysis/tested.md`): 40,596,966 pixel windows plus 276,674 nibble windows, 0 match,
+0 copy of the known escrow address in those nibble streams, witnessed. What remains is
+a reading of the drawing that is not "ink-band length, mean, width, or ink fraction
+mapped to a nibble": Morse of stroke gaps, a glyph alphabet at a scale the 240-245
+value-band does not contain (that band is speckle), or a passworded container. Confirms:
+a 64-hex string taken from that reading derives the target exactly. Kills: a complete,
+witnessed enumeration of one named encoding with 0 match.
 
 ## 2. Join the community Telegram group and search first-hand for the "$100" hint (needs a
 person)
@@ -55,3 +56,11 @@ Killed 2026-08-17. `tools/visual_scan.py --selftest` recovers an 8x4 raw plant a
 non-white / ink) and 2x16 / 4x8 / 8x4 / 16x2 tiles. `--tiles` tested 10,322,588
 overlapping 16x16, 32x8, and 8x32 tiles of LSB and of ink<110. 0 match. Counts in
 `data/visual_scan.json`.
+
+## Killed: hatch bands and column silhouettes as hex digits
+
+Killed 2026-08-17. `tools/hatch_hex.py --selftest` recovers a 64-bar encoding of private
+key 1 and a 40-bar encoding of the known escrow address hex. `--scan` tested 276,674
+nibble windows (181,536 unique keys) across 30,453 streams of building floors, vertical
+strokes, and column silhouette features. 0 match, 0 copy of the 40-hex escrow address.
+Counts in `data/hatch_hex.json`.

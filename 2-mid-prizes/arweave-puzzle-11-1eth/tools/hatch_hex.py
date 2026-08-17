@@ -76,11 +76,14 @@ def nibbles_to_key(nibs: list[int]) -> bytes | None:
     return out
 
 
-def bands(crop: np.ndarray, thresh: int, min_frac: float, min_h: int) -> list[tuple[int, int, float, float]]:
-    """Return (y0, y1, ink_frac, mean_gray) for each horizontal ink band."""
+def bands(crop: np.ndarray, thresh: int, min_frac: float, min_h: int, axis: int = 0) -> list[tuple[int, int, float, float]]:
+    """Return (start, end, ink_frac, mean_gray) for each ink band along axis.
+
+    axis=0 is horizontal floors (row groups); axis=1 is vertical strokes (column groups).
+    """
     if crop.size == 0:
         return []
-    ink = (crop < thresh).mean(axis=1)
+    ink = (crop < thresh).mean(axis=1 - axis)
     on = ink > min_frac
     out: list[tuple[int, int, float, float]] = []
     i = 0
@@ -91,7 +94,7 @@ def bands(crop: np.ndarray, thresh: int, min_frac: float, min_h: int) -> list[tu
             while j < n and on[j]:
                 j += 1
             if j - i >= min_h:
-                sl = crop[i:j]
+                sl = crop[i:j] if axis == 0 else crop[:, i:j]
                 out.append((i, j, float(ink[i:j].mean()), float(sl.mean())))
             i = j
         else:
@@ -224,44 +227,46 @@ def run_scan() -> int:
     min_hs = (1, 2, 3, 4)
     min_fracs = (0.08, 0.12, 0.15, 0.2, 0.3)
 
-    for region_name, clist in regions.items():
-        for th in thresholds:
-            for min_h in min_hs:
-                for mf in min_fracs:
-                    all_bands: list[tuple[int, int, float, float, np.ndarray]] = []
-                    for crop in clist:
-                        for y0, y1, frac, mean in bands(crop, th, mf, min_h):
-                            all_bands.append((y0, y1, frac, mean, crop))
-                    if not all_bands:
-                        continue
-                    heights = [float(y1 - y0) for y0, y1, _, _, _ in all_bands]
-                    fracs = [frac * 255.0 for _, _, frac, _, _ in all_bands]
-                    means = [mean for _, _, _, mean, _ in all_bands]
-                    widths = []
-                    for y0, y1, _, _, crop in all_bands:
-                        sl = crop[y0:y1]
-                        ink = sl < th
-                        cols = np.where(ink.any(axis=0))[0]
-                        widths.append(float(cols[-1] - cols[0] + 1) if len(cols) else 0.0)
-                    src_base = f"hatch/{region_name}/th{th}/h{min_h}/f{mf}/n{len(all_bands)}"
-                    # 32 bands as raw bytes (heights/means clipped)
-                    if len(all_bands) == 32:
-                        for name, seq in (("height", heights), ("mean", means), ("width", widths), ("frac", fracs)):
-                            raw = bytes(int(np.clip(v, 0, 255)) for v in seq)
-                            if consider_bytes(raw, src_base + f"/{name}u8", seen, stats):
-                                return 0
-                            if consider_bytes(bytes(reversed(raw)), src_base + f"/{name}u8rev", seen, stats):
-                                return 0
-                    for name, seq in (("height", heights), ("mean", means), ("width", widths), ("frac", fracs)):
-                        for map_name, nibs in mappings(seq).items():
-                            src = f"{src_base}/{name}/{map_name}"
-                            if consider_nibs(nibs, src, seen, stats):
-                                return 0
-                            # if exactly 32 mapped values 0-15, pad to 64 nibbles
-                            if len(nibs) == 32:
-                                for pad in (nibs + [0] * 32, [0] * 32 + nibs, nibs + nibs):
-                                    if consider_nibs(pad, src + "/pad", seen, stats):
-                                        return 0
+    for axis, axis_name in ((0, "floors"), (1, "strokes")):
+        for region_name, clist in regions.items():
+            for th in thresholds:
+                for min_h in min_hs:
+                    for mf in min_fracs:
+                        all_bands: list[tuple[int, int, float, float, np.ndarray]] = []
+                        for crop in clist:
+                            for a0, a1, frac, mean in bands(crop, th, mf, min_h, axis=axis):
+                                all_bands.append((a0, a1, frac, mean, crop))
+                        if not all_bands:
+                            continue
+                        lengths = [float(a1 - a0) for a0, a1, _, _, _ in all_bands]
+                        fracs = [frac * 255.0 for _, _, frac, _, _ in all_bands]
+                        means = [mean for _, _, _, mean, _ in all_bands]
+                        widths = []
+                        for a0, a1, _, _, crop in all_bands:
+                            sl = crop[a0:a1] if axis == 0 else crop[:, a0:a1]
+                            ink = sl < th
+                            if axis == 0:
+                                idx = np.where(ink.any(axis=0))[0]
+                            else:
+                                idx = np.where(ink.any(axis=1))[0]
+                            widths.append(float(idx[-1] - idx[0] + 1) if len(idx) else 0.0)
+                        src_base = f"hatch/{axis_name}/{region_name}/th{th}/h{min_h}/f{mf}/n{len(all_bands)}"
+                        if len(all_bands) == 32:
+                            for name, seq in (("len", lengths), ("mean", means), ("width", widths), ("frac", fracs)):
+                                raw = bytes(int(np.clip(v, 0, 255)) for v in seq)
+                                if consider_bytes(raw, src_base + f"/{name}u8", seen, stats):
+                                    return 0
+                                if consider_bytes(bytes(reversed(raw)), src_base + f"/{name}u8rev", seen, stats):
+                                    return 0
+                        for name, seq in (("len", lengths), ("mean", means), ("width", widths), ("frac", fracs)):
+                            for map_name, nibs in mappings(seq).items():
+                                src = f"{src_base}/{name}/{map_name}"
+                                if consider_nibs(nibs, src, seen, stats):
+                                    return 0
+                                if len(nibs) == 32:
+                                    for pad in (nibs + [0] * 32, [0] * 32 + nibs, nibs + nibs):
+                                        if consider_nibs(pad, src + "/pad", seen, stats):
+                                            return 0
 
     # per-column nibble streams of the building band
     b0, b11 = geo["buildings"][0], geo["buildings"][-1]

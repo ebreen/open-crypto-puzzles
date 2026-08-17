@@ -81,14 +81,35 @@ This rules out a raw 32-byte key stored as consecutive gray values in those stre
 out a passworded stego container, a hatch-count cipher that is not a 32-byte window, or
 a value-band that renders as hex text.
 
-## What the geometry, metadata, LSB, and visual-scan sweeps together rule out
+## Hatch bands and column silhouettes as hex digits
+
+Raster windows pack pixels. This family reads the drawing as a sequence of hex digits:
+horizontal ink bands (floors of hatching) and vertical ink bands (strokes) inside each
+building, optionally the sail, plus per-column roof height, ink fraction, mean, and dark
+runs of the building band. Each sequence is mapped to nibbles (mod 16, div 16, min-max
+scaled, and reversed). 64-nibble windows are checked as keys. 40-nibble strings are
+searched for the known escrow address hex. Counts in `data/hatch_hex.json`.
+
+| Hypothesis | Space | Method | Result | Witness | Rate | Date |
+|---|---|---|---|---|---|---|
+| Horizontal floors and vertical strokes of the 12 buildings (and buildings+sail), thresholds 80-220 step 10, min band size 1-4, min ink fraction 0.08-0.3, mapped from band length/mean/width/ink-fraction; 32-band sequences also as raw bytes; column features of the building band, raw and binned to 32/40/64 | 276,674 windows (181,536 unique keys) across 30,453 streams | `tools/hatch_hex.py --scan` then the same eth_tail as `tools/oracle.py` | 0 match, 0 copy of the 40-hex escrow address in any nibble stream | yes: 64 bars encoding private key 1 recovered; 40 bars encoding the escrow hex re-found | about 31,000 windows/s (8.76 s total) | 2026-08-17 |
+
+Value-band 240-245 as rendered glyphs is separately weak: that band has 11,199 connected
+components, largest 16 pixels, 0 components matching a digit-like aspect/area cut
+(area 30-800, height 8-80, aspect 0.25-1.4). That is a count of blobs, not an OCR
+oracle, so it is not a witnessed negative on every possible glyph alphabet.
+
+## What the geometry, metadata, LSB, visual-scan, and hatch-hex sweeps together rule out
 
 The geometry and metadata families together covered on the order of 1,000 candidates, 0
 match, 0 near-miss. The LSB family covered 16,766,064 sliding windows plus 3,768 prefix
 candidates, 0 match. The visual-scan family covered 23,830,902 sliding windows plus 2,803
-thumbnail candidates, 0 match. Together these rule out every direct single-transform
-reading of the measured geometry and the metadata anomaly that I enumerated, a raw
-32-byte key stored as consecutive bits or consecutive gray values in the listed streams,
-and a 16x16-style LSB or ink tile. They do not rule out a passworded stego container, a
-hatch or value-band reading that yields hex digits as text, or a reading that depends on
-the promised but never-delivered "$100" hint (see "Open leads, ranked").
+thumbnail candidates, 0 match. The hatch-hex family covered 276,674 nibble windows
+(181,536 unique keys), 0 match, 0 copy of the known escrow address hex. Together these
+rule out every direct single-transform reading of the measured geometry and the metadata
+anomaly that I enumerated, a raw 32-byte key stored as consecutive bits or consecutive
+gray values in the listed streams, a 16x16-style LSB or ink tile, and hatch-band or
+column-silhouette sequences mapped to hex digits by length, mean, width, or ink fraction.
+They do not rule out a passworded stego container, a hatch cipher that is not one of
+those nibble maps, or a reading that depends on the promised but never-delivered "$100"
+hint (see "Open leads, ranked").
