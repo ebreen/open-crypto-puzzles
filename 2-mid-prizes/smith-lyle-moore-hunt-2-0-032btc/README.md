@@ -4,11 +4,12 @@ The band Smith, Lyle & Moore funded a second treasure hunt on their Wix site on 
 after a first hunt a reader solved and swept. The site is a roughly 70-page maze of
 password-gated pages; an image's EXIF data opens a compass page revealing four branches.
 Three branches end in a page whose password is an author-written riddle answer, not a
-decoded cipher; the fourth is a decorative dead end. All 12 BIP39 words and a passphrase
-needed to sweep the wallet sit behind those three pages. I hold every password up to each
-lock and tested about 5,000 candidate answers with no hit. The published account xpub
-confirms the wallet and derivation path; what is missing is the riddle answers, not the
-cryptography.
+decoded cipher. North is a long side story, not a fourth insight lock: it prints four
+tokens (hunt, gather, whale, blood) and then dies in Hell or on a "coming soon" stub.
+All 12 BIP39 words and a passphrase needed to sweep the wallet still sit behind the three
+riddle pages. I hold every password up to each lock and tested about 5,720 candidate
+answers on those three gates with no hit. The published account xpub confirms the wallet
+and derivation path; what is missing is the riddle answers, not the cryptography.
 
 ## At a glance
 
@@ -19,7 +20,7 @@ cryptography.
 | Prize | 0.031777 BTC (about $2,002 at BTC = $63,000, 2026-08-16) |
 | Chain | bitcoin |
 | Escrow | `bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y` ([mempool.space](https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y)) |
-| Last on-chain check | 2026-08-16: funded and unspent (3,177,700 sats received, 0 spent, 1 transaction) |
+| Last on-chain check | 2026-08-17: funded and unspent (3,177,700 sats received, 0 spent, 1 transaction) |
 | Status | OPEN |
 | Puzzle type | bip39-seed, password-pages, web-tree |
 | Target format | BIP39 12 words, English wordlist, plus a passphrase, BIP84 `m/84'/0'/0'/0/0`, P2WPKH |
@@ -36,13 +37,16 @@ branch passwords in clear text: `north64`, `south64`, `east64`, and `west64`. Pa
 the site frames the hunt as a branching structure where some paths lead nowhere and others
 lead to the treasure.
 
-Three branches (West, East, South) each end on one password-gated page whose full riddle
-text I quote in [clues/author-posts.md](clues/author-posts.md): a pirate-themed riddle naming
-Blackbeard, Napster's Shawn Fanning, Metallica's Lars Ulrich, Silk Road's Ross Ulbricht, and
-Pirate Bay's Gottfrid Svartholm and Fredrik Neij (West); a deep-sea narcosis riddle asking
-"is this the end?" (East); and a page titled "Name 6" asking for the sixth Gilligan's Island
-castaway, reached after naming the other five in sequence (South). The fourth branch, North,
-ends on a static "coming soon" page.
+Three branches (West, East, South) each end on one password-gated page. The riddle text sits
+on the open page immediately before the lock; I quote it in
+[clues/author-posts.md](clues/author-posts.md): a pirate-themed riddle naming Blackbeard,
+Napster's Shawn Fanning, Metallica's Lars Ulrich, Silk Road's Ross Ulbricht, and Pirate
+Bay's Gottfrid Svartholm and Fredrik Neij (West, on `/west`, lock `/message`); a deep-sea
+narcosis riddle asking "is this the end?" (East, on `/weallliveinayellowsubmarine`, lock
+`/take-a-big-breath`); and Name 5 asking for the next castaway after Ginger (South, lock
+slug `havingfunwiththeurl-ilovedthisshowasakid-sosomuch`). The fourth branch, North, is
+now fully walked: a bottle message, a land-ho fork, a hitchhiker death ending, and a Cape
+Cod "coming soon" stub dated 2022-09-09.
 
 The band's earlier hunt, "Born to Be Wild" (2021, an Apollo/moon theme on the same site), was
 solved and swept by a reader; no write-up of that solution or of this second hunt exists that
@@ -54,12 +58,12 @@ I have found, beyond a 2024-08-23 stacker.news post flagging this hunt as still 
 
 The published wallet is a standard BIP39 seed with a passphrase, derived along BIP84 to a
 P2WPKH address. The 12 words and the passphrase are scattered as fragments behind the three
-locked pages; I have not recovered any of them. Every page reachable without opening one of
-the three locks has been read directly and carries none of the 12 words (full channel map in
-[analysis/mechanism.md](analysis/mechanism.md)).
+locked pages; I have not recovered any of them. North prints hunt / gather / whale / blood;
+three of those sit on the BIP39 English list and `whale` does not, so that bottle is not a
+4-word seed fragment. Full channel map in [analysis/mechanism.md](analysis/mechanism.md).
 
 ![The site as a tree: a shared entry chain fanning into 4 branches, colored by whether each page is open, a confirmed dead end, or a locked insight gate](images/02-structure-branches.svg)
-*Figure 1. The full page-chain structure reached from the entry page, by branch and state (source: data/site-structure.csv, script tools/fig_structure.py), 2026-08-16.*
+*Figure 1. The full page-chain structure reached from the entry page, by branch and state (source: data/site-structure.csv, script tools/fig_structure.py), 2026-08-17.*
 
 ### Derivation and oracle
 
@@ -94,20 +98,27 @@ trustworthy math; it is not evidence about whether a given set of words is the r
 ### Established facts
 
 1. The escrow is funded and unspent: 3,177,700 sats received in 1 transaction on 2022-07-29,
-   0 spent, confirmed via [mempool.space](https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y) on 2026-08-16.
+   0 spent, confirmed via [mempool.space](https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y) on 2026-08-17.
 2. The published account xpub's `m/0/0` address, encoded as P2WPKH, equals the escrow
    (`tools/oracle.py --selftest`).
-3. Page passwords on this site are case sensitive: the known-good passwords `Gilligan` and
-   `Ginger` succeed only in Title Case and fail in both lowercase and all caps.
-4. The North branch carries 0 of the 12 words: every page on it was read directly and ends
-   on a static page with no further content.
+3. Page passwords on this site are case sensitive: `Gilligan` succeeds only in Title Case,
+   and `west64` succeeds only in lowercase.
+4. North is not an insight lock. Password `glimmer` opens the whale-message page, which
+   prints hunt / gather / whale / blood and the derived password `huntgathwhalblo`. Those
+   four tokens are not a BIP39-valid set (`whale` is not on the English wordlist) and do not
+   open West, East, or South. The land chain behind them is a death ending (`sleighride` ->
+   `666`) or a 2022-09-09 "coming soon" stub (`vampire`).
 5. The West and East locks require lowercase, single-token passwords with no digits, matching
-   every other password already known on those branches. The South lock requires a Title
-   Case single token, matching the naming pattern of the five prior South pages.
+   every other password already known on those branches. The South lock is Title Case; spaced
+   `Mary Ann` opens the tropical-island page `jetkc` and is rejected on Name 6 (`b3vye`).
 6. No numeric suffix appears in any password I have opened that is not directly visible in an
-   image on that same page.
-7. The site's password gate is enforced server side: the page body is not served to a normal
-   browser before the correct password is entered, confirmed by direct inspection.
+   image on that same page, or printed in clear text on the previous page.
+7. The site's password gate is enforced server side. The live resolver returns hit URLs
+   under `payload.urls` (HTTP 200) and misses as HTTP 403 `errorCode -17005`.
+8. East and West merge into one pirate spine after West's lock: `albatross` -> `semaphore`
+   -> `youshallpass47` -> `witchoftheeast` -> Titanic death (`2hours40minutes` / `777`) or
+   yellow submarine (`20000leagues`) -> East lock. The pirate "fight" sibling (`y6cd1`) is
+   still closed.
 
 ## What has been tested
 
@@ -121,27 +132,28 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Puzzle-wide lowercase password rule | 2 known passwords retested in 3 case forms each | direct page-password submission on open gates | refuted: only Title Case succeeds | yes: both known-good passwords reproduced | 2026-07-25 |
 | Cover-art trailer-byte channel (word 1) | 1,585 images | byte scan after EOF, same method that finds the real payload on the solved Hunt #1 cover | 0 match on Hunt #2 material | yes: positive control on the Hunt #1 cover | 2026-07-14 |
 | Audio steganography on the public master | 1 file, 4 techniques | Morse/reverse/LSB/spectrogram analysis | 0 match, no alternate mix found | uncertified | 2026-07-10 |
+| Three locks, high-value list under the corrected Wix resolver | 151 unique strings | direct page-password submission | 0 match on the 3 locks; `glimmer` and spaced `Mary Ann` hit other pages | yes: `west64` and `Ginger` re-accepted | 2026-08-17 |
 
-Cumulative across the 3 open locks: about 5,000 candidates, 0 hits, all uncertified per the
-witness definition above (no known-good answer exists yet to prove full coverage of any one
-lock's format).
+Cumulative across the 3 insight locks: about 5,720 unique strings, 0 hits. A 151-string
+high-value retest on 2026-08-17 is certified against the live resolver (witness `west64` /
+`Ginger`). Earlier lock rows stay uncertified in the witness sense above.
 
 ## Open leads, ranked
 
-1. **Retry the West lock in Title Case** (minutes). The lowercase-only assumption behind
-   about 1,560 of the West candidates is refuted; the same candidate list has not been
-   meaningfully retried in Title Case. Confirmed if any candidate opens the page.
-2. **Retry the East lock on the exact "does not end here" film line** (minutes). The East
-   riddle chain is a confirmed Gandalf reference (`youshallpass47` on an earlier page); the
-   exact wording of Pippin's line to Gandalf after his fall has not been tried, only near
-   variants (`gandalfthewhite`, `mithrandir`, `flyyoufools`, `theturnofthetide`, `endno`).
-3. **Reverse image search the `LifeFlashBeforeEyes.mp4` clip stills on the East branch**
-   (hours). If any still frame is identifiable, its source title is a strong East candidate.
-4. **A fresh reading of the South lock's own pun** (needs new information). Opening `b3vye`
-   unlocks the entire downstream South chain in one step, but the full Gilligan's Island canon
-   is exhausted; the likely answer is an off-canon play on the page's own slug,
-   `havingfunwiththeurl-ilovedthisshowasakid`, in the same deliberate-detail style the author
-   used on the West riddle ("unbridaled").
+1. **A fresh reading of the South lock's own slug pun** (needs new information). Name 6 is
+   not `Roy` / `Professor` / spaced `Mary Ann`. The live slug is
+   `havingfunwiththeurl-ilovedthisshowasakid-sosomuch`. Spaced `Mary Ann` opens the
+   tropical-island page without opening Name 6; raft and fire on that island are still
+   closed. Confirmed if any reading opens `b3vye`.
+2. **Reverse image search the `LifeFlashBeforeEyes.mp4` clip stills on the East branch**
+   (hours). Stills include a night Saturn V, a hillside couple, a Cabo-like sunset, and
+   slit-scan warp passages. Glimmer lyric concatenations already miss. Confirmed if a
+   named source title opens `c2ozw`.
+3. **West lock: not another spelling of the named surnames** (minutes to hours). Princess
+   Bride / Silk Road / `pirateship.gif` concatenations miss. Next try is a different
+   reading of "coming from the treasure", or the still-closed fight page `y6cd1`.
+4. **Open the pirate fight page `y6cd1`** (minutes once a password is found). Sibling of
+   the semaphore path; may constrain West.
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
