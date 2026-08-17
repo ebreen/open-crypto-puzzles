@@ -21,7 +21,7 @@
     "note": "3,177,700 sats, funded in a single transaction on 2022-07-29, unspent"
   },
   "addresses": [
-    { "address": "bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y", "chain": "bitcoin", "role": "escrow", "label": "main", "explorer": "https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y", "expected": "3177700 sats", "verified_on": "2026-08-16", "verified_state": "funded-unspent" },
+    { "address": "bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y", "chain": "bitcoin", "role": "escrow", "label": "main", "explorer": "https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y", "expected": "3177700 sats", "verified_on": "2026-08-17", "verified_state": "funded-unspent" },
     { "address": "bc1qax0hsnwnxl7393awtc3hsy0ftm6tg4tyk2nfja", "chain": "bitcoin", "role": "payout", "label": "my wallet (destination if solved)", "explorer": "https://mempool.space/address/bc1qax0hsnwnxl7393awtc3hsy0ftm6tg4tyk2nfja", "expected": "n/a", "verified_on": "2026-08-16", "verified_state": "unknown" }
   ],
   "puzzle_type": ["bip39-seed", "password-pages", "web-tree"],
@@ -33,21 +33,21 @@
     "certified_against": "the published account xpub, whose m/0/0 P2WPKH address equals the escrow; a known-wrong BIP39 test vector is also confirmed to produce NO MATCH. The BIP39-mnemonic-to-seed leg has no known-good vector, since 0 of 12 words are held"
   },
   "difficulty_left": "insight",
-  "difficulty_note": "the 12 words and passphrase are locked behind 3 password-gated pages, each requiring a specific author-intended answer to a riddle rather than a decodable cipher; about 5,000 candidates have been tried across the 3 locks with 0 hits, none of them a certified exhaustive negative",
-  "tested_total": { "candidates": 5000, "families": 6, "certified": false },
+  "difficulty_note": "the 12 words and passphrase sit behind 3 password-gated pages, each requiring a specific author-intended answer to a riddle rather than a decodable cipher; about 5,720 unique strings have been tried across the 3 locks with 0 hits; a 151-string retest is certified against the live Wix resolver",
+  "tested_total": { "candidates": 5720, "families": 11, "certified": false },
   "leads": [
-    { "rank": 1, "title": "retry the West lock in Title Case", "cost": "minutes", "status": "open" },
-    { "rank": 2, "title": "retry the East lock on the exact Gandalf 'journey doesn't end here' phrasing", "cost": "minutes", "status": "open" },
-    { "rank": 3, "title": "reverse image search the LifeFlashBeforeEyes.mp4 clip stills", "cost": "hours", "status": "open" },
-    { "rank": 4, "title": "a fresh reading of the South lock's own slug pun", "cost": "needs new information", "status": "open" }
+    { "rank": 1, "title": "a fresh reading of the South lock slug pun (Name 6 is not Mary Ann; that password opens the island page instead)", "cost": "needs new information", "status": "open" },
+    { "rank": 2, "title": "reverse image search the LifeFlashBeforeEyes.mp4 clip stills", "cost": "hours", "status": "open" },
+    { "rank": 3, "title": "West lock: a connection that is not a bare concatenated pirate name", "cost": "minutes", "status": "open" },
+    { "rank": 4, "title": "open the pirate fight page y6cd1", "cost": "minutes", "status": "open" }
   ],
   "solutions": [],
   "artifacts": [],
   "sources": [
     { "title": "Smith, Lyle & Moore, Treasure Hunt page", "url": "https://www.smithlylemoore.com/treasure-hunt", "date": "2022-07-29", "archived": null },
     { "title": "Bitcoin Treasure Hunt - 2021 (still unsolved)", "url": "https://stacker.news/items/658645", "date": "2024-08-23", "archived": null },
-    { "title": "Escrow address", "url": "https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y", "date": "2026-08-16", "archived": null }
+    { "title": "Escrow address", "url": "https://mempool.space/address/bc1q0akdjvrc2csau2n3gyxa3xcq0fss852x997m9y", "date": "2026-08-17", "archived": null }
   ],
-  "third_party_material": "no Wix page mirrors, no audio/video files, no Instagram media shipped; only 3 short verbatim riddle quotes (about 220 words total) with the site URL, and my own derived structure/pipeline data",
-  "last_updated": "2026-08-16"
+  "third_party_material": "no Wix page mirrors, no audio/video files, no Instagram media shipped; only short verbatim riddle quotes (West, East, South, plus the North bottle lines) with the site URL, and my own derived structure/pipeline data",
+  "last_updated": "2026-08-17"
 }

@@ -10,42 +10,63 @@ opens a compass page, which displays four branch passwords in clear text: `north
 
 Everything up to and including the branch fork is solved: I hold every password from the
 entry page through the compass page and through every page each branch passes before its
-final locked gate.
+final locked gate, plus the North land chain described below.
+
+The three remaining insight riddles are printed on the open page immediately before each
+lock, not on the locked page itself. West: riddle on `g5jpk` (`/west`), lock is `wt1jy`
+(`/message`). East: riddle on `pxsqo` (`/weallliveinayellowsubmarine`), lock is `c2ozw`
+(`/take-a-big-breath`, titled resurface). South: riddle on `wdnv9` (`/name5`), lock is
+`b3vye` (`/havingfunwiththeurl-ilovedthisshowasakid-sosomuch`, titled Name 6).
 
 ## The four branches
 
-North is a decorative dead end: its chain of pages (ending in a "coming soon" page) carries
-none of the 12 words. I confirmed this by reading the full content of every page on the
-branch; no word-bearing artifact of any kind is present.
+North is a long narrative that I had marked empty too early. Password `glimmer` opens
+`mwfaz` (`/whale-message`). The page prints four tokens in numbered order, hunt / gather /
+whale / blood, and a derived page password `huntgathwhalblo` (first four letters of each
+token concatenated). That password opens `thmoi` (`/land-ho`), which prints two further
+passwords in clear text: `michaelphelps` (swim to shore, `eqyel`) and `seahitchhiker`
+(hitch a ride, `chtro`).
 
-West, East, and South each end in one password-gated page I have not opened. I call these
-the three insight locks. Opening any of them requires guessing a short, unenumerable string
-that answers the riddle text quoted in [clues/author-posts.md](../clues/author-posts.md), not
-decoding anything hidden in an image or audio file: no steganographic payload was found on
-any page along the way (see analysis/tested.md).
+The hitch path is a death ending: `nantucketsleighride.png` plus the instruction "Password
+is 2 words, but omit the first" yields `sleighride` on `d3zak`, which sends the reader to
+Hell with password `666`. The swim path opens `vbk6p` (`/cape-cod`) with `vampire`; that
+page is a "Coming Soon... Sep 9, 2022" stub about arriving in a past America with no Apollo
+missions. Three of the bottle tokens (`hunt`, `gather`, `blood`) are BIP39 English words;
+`whale` is not. I do not treat the four tokens as recovered seed words. They have not opened
+West, East, or South.
 
-The South branch is a chain of six pages named after five Gilligan's Island castaways in
-sequence (Gilligan, the Skipper, Thurston Howell III, Lovey Howell, Ginger), each password a
-single Title Case name, before ending on a sixth page titled "Name 6" that asks for the
-sixth castaway, the Professor. This last page is the one I have not opened; solving it opens
-the entire South branch's downstream chain (a further set of "escape the island" pages) in
-one step, since password to `b3vye` is also the key to everything after it.
+West, East, and South each still end in one password-gated page I have not opened. I call
+these the three insight locks. Opening any of them requires guessing a short, unenumerable
+string that answers the riddle text quoted in [clues/author-posts.md](../clues/author-posts.md).
+
+West's lock sits on `g5jpk` before the pirate merge. East and West later share one spine:
+`east64` -> bird (`xrd91`) -> pirates (`e3zre`, password `albatross`) -> semaphore
+(`hhb0r`) -> litter (`sm18u`, password `youshallpass47`) -> night / iceberg / yellow
+submarine -> East lock. The sibling pirate button "I choose to fight" goes to still-closed
+`y6cd1`.
+
+The South name chain is Gilligan, Jonas (the Skipper's given name), Thurston, Lovey, Ginger,
+then locked Name 6. Spaced `Mary Ann` does not open Name 6. It does open the tropical-island
+page `jetkc`, so the island chain is a separate gate, not a Name 6 alias.
 
 ## Case sensitivity and format, established by direct test
 
-Passwords on this site are case sensitive. I confirmed this on two already-open gates on the
-South chain: the page password `Gilligan` succeeds where `gilligan` and `GILLIGAN` both fail,
-and `Ginger` succeeds where `ginger` and `GINGER` both fail. Combined with the passwords
-already known for every other open gate, the format of the three remaining locks is:
+Passwords on this site are case sensitive. I confirmed this on already-open gates: `Gilligan`
+succeeds where `gilligan` and `GILLIGAN` both fail, and `west64` succeeds where `West64`
+fails. Combined with the passwords already known for every other open gate, the format of
+the three remaining locks is:
 
-- South (`b3vye`): Title Case, a single token, no digits, no spaces (matches the naming
-  pattern of the five prior South pages).
+- South (`b3vye`): Title Case, matching the naming pattern of the five prior South pages.
+  Spaced `Mary Ann` is accepted on `jetkc` and rejected on `b3vye`, so Name 6 is not that
+  string.
 - West (`wt1jy`) and East (`c2ozw`): lowercase, a single token with no spaces (matches every
-  other open West/East page password, e.g. `albatross`, `semaphore`, `20000leagues`).
+  other open West/East page password, e.g. `albatross`, `semaphore`, `20000leagues`,
+  `glimmer`, `sleighride`, `vampire`).
 
 No password anywhere on the site I have opened carries a numeric suffix that is not directly
-derivable from the page's own content (a number visible in an image on that same page); no
-guess should add an arbitrary digit string.
+derivable from the page's own content (a number visible in an image on that same page, or a
+password printed in clear text on the previous page); no guess should add an arbitrary digit
+string.
 
 ## The 12-word carrier channels
 
@@ -66,5 +87,6 @@ author hides seed words, not as part of the live puzzle. Its seed was
 | passphrase | "in the song" | the closing track's title | the Glimmer track title or lyric | not testable without the 12 words |
 
 The practical conclusion: every carrier channel that is reachable without solving one of the
-three insight locks has been checked and is either empty (refuted) or inherited scaffolding
-from Hunt #1 that carries no new word. All 12 words are behind West, East, and South.
+three insight locks has been checked and is either empty (refuted), inherited scaffolding
+from Hunt #1, or North-branch story text whose four printed tokens are not a BIP39-valid
+set. All 12 words still sit behind West, East, and South.
