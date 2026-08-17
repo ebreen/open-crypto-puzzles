@@ -1,0 +1,13 @@
+{
+  "_comment": "Counts from tools/hatch_hex.py --scan on clues/arweave-puzzle-11.png, 2026-08-17. Horizontal floors and vertical strokes inside the 12 buildings (and optional sail), plus per-column silhouette features of the building band, mapped to nibble streams. 64-nibble windows checked as keys; 40-nibble windows searched for the known escrow address hex. 0 match, 0 address hit.",
+  "image": "clues/arweave-puzzle-11.png",
+  "target": "0xFF2142E98E09b5344994F9bEB9C56C95506B9F17",
+  "unique_keys": 181536,
+  "windows": 276674,
+  "streams": 30453,
+  "address_hits": 0,
+  "seconds": 8.76,
+  "matches": 0,
+  "date": "2026-08-17",
+  "witness": "synthetic 64 horizontal bars whose heights encode secp256k1 private key 1, recovered as nibbles and packed to the same 32 bytes; synthetic 40 bars encoding the known escrow address hex, re-found as a substring"
+}
