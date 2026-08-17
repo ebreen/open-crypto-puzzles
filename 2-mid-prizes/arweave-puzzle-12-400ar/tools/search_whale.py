@@ -72,7 +72,9 @@ DISPLAY = {
 
 PIECE3 = (
     "2111011",
-    # all four shape codes including the hexagon reading (29 digits)
+    "Hexagon",
+    # three printed numbers only, then all four including hexagon
+    "1011112111112111211021",
     "10111121111121112110212111011",
 )
 PIECE4 = ("Alien", "ALIEN", "alien", "Aline", "ALINE")
@@ -147,8 +149,15 @@ def piece1_strings():
             seen.add(s)
         if names[-1] == "Blue":
             initials_w = "".join(DISPLAY[n][0] for n in names[:-1] + ("White",))
-            for s in _cases(initials_w):
-                seen.add(s)
+        for s in _cases(initials_w):
+            seen.add(s)
+    # IQ-test answer only: the missing colour, not the full flag list.
+    for s in ("Blue", "White", "Cyan", "Yellow", "Navy", "Indigo", "Violet"):
+        seen.update(_cases(s))
+    # Five named colours without the blank, if the IQ answer sits in piece 2.
+    five = ("Red", "Indigo", "Gray", "Green", "Violet")
+    seen.update(_cases("".join(five)))
+    seen.update(_cases("".join(n if n != "Gray" else "Grey" for n in five)))
     return sorted(seen)
 
 
@@ -182,6 +191,12 @@ def piece2_strings():
         "Andreessen-Horowitz", "BlueWhale16-03-2020",
         "8.3million", "8300000", "Orca", "whale", "Whale",
         "Tiamat", "Leviathan", "MobyDick",
+        # company / species named after a whale (the README gap)
+        "BlueWhaleCapital", "BlueWhaleGrowthFund", "BlueWhaleGrowth",
+        "StephenYiu", "PeterHargreaves", "HargreavesLansdown",
+        "LFBlueWhaleGrowthFund", "WSBlueWhaleGrowthFund",
+        "BalaenopteraMusculus", "Balaenoptera", "Musculus",
+        "BlueWhaleCapitalLLP", "LFBlueWhale",
     ]
     seen = set()
     for s in raw:
@@ -262,13 +277,34 @@ def main():
     parser.add_argument("--selftest", action="store_true")
     parser.add_argument("--workers", type=int, default=os.cpu_count() or 1)
     parser.add_argument("--limit", type=int, default=0, help="cap candidates (0 = all)")
+    parser.add_argument(
+        "--family",
+        choices=("all", "named-whale"),
+        default="all",
+        help="named-whale: only Blue-only IQ answers and companies/species named after a whale",
+    )
     args = parser.parse_args()
     if args.selftest:
         sys.exit(0 if selftest_fastpath() else 1)
 
     p1 = piece1_strings()
     p2 = piece2_strings()
-    cands = assemble(p1, p2, PIECE3, PIECE4)
+    if args.family == "named-whale":
+        named = {
+            "BlueWhaleCapital", "BlueWhaleGrowthFund", "BlueWhaleGrowth",
+            "StephenYiu", "PeterHargreaves", "HargreavesLansdown",
+            "LFBlueWhaleGrowthFund", "WSBlueWhaleGrowthFund",
+            "BalaenopteraMusculus", "Balaenoptera", "Musculus",
+            "BlueWhaleCapitalLLP", "LFBlueWhale",
+        }
+        named_c = set()
+        for s in named:
+            named_c.update(_cases(s))
+        short_p1 = [x for x in p1 if len(x) <= 6]
+        cands = list(set(assemble(p1, sorted(named_c), PIECE3, PIECE4))
+                     | set(assemble(short_p1, p2, PIECE3, PIECE4)))
+    else:
+        cands = assemble(p1, p2, PIECE3, PIECE4)
     cands.sort()
     n_raw = len(cands)
     if args.limit:
