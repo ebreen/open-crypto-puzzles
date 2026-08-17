@@ -18,6 +18,7 @@ stops. Run from this folder:
 
   python3 tools/search_whale.py --selftest
   python3 tools/search_whale.py
+  python3 tools/search_whale.py --family iq-long
 """
 from __future__ import annotations
 
@@ -81,6 +82,42 @@ PIECE4 = ("Alien", "ALIEN", "alien", "Aline", "ALINE")
 
 # All 24 concatenations; published 2x2 order is (0,1,2,3).
 ORDERS = tuple(itertools.permutations(range(4)))
+
+# Short IQ-test / grammar tokens for piece 1. Sibling answers are a proper
+# noun, a notation, or a count, not the literal drawn object, so "Blue" (the
+# missing colour) is the reading that matches that grammar. Colour-name dumps
+# of all six flags are a different family.
+P1_IQ = (
+    "Blue", "White", "Navy", "Cyan", "Azure",
+    "RGB", "CMYK", "Primary", "Additive", "Missing", "Indigo",
+    "000111",
+)
+
+# Atoms for complementary-length whale strings. A short piece 1 forces a
+# long piece 2: Blue (4) + 2111011 (7) + Alien (5) leaves 42 characters.
+P2_INVESTORS = (
+    "AndreessenHorowitz", "UnionSquareVentures", "CoinbaseVentures",
+    "a16z", "a16zcrypto", "USV", "MarcAndreessen", "BenHorowitz",
+)
+P2_DATES = (
+    "16-03-2020", "16032020", "20200316", "2020-03-16",
+    "March162020", "16March2020",
+)
+P2_FORBES = (
+    "PermanentLibraryOfAlexandria", "LibraryOfAlexandria",
+    "MichaelHaley", "MichaelStephenHaley",
+    "Permanent", "Alexandria", "Blockchain", "Arweave", "Permaweb",
+)
+P2_AMOUNTS = ("8300000", "8.3million")
+P2_HEADLINES = (
+    "PermanentLibraryOfAlexandriaOnBlockchain",
+    "ArweavePermanentLibraryOfAlexandria",
+    "LibraryOfAlexandriaOnTheBlockchain",
+    "PermanentLibraryOfAlexandriaOnTheBlockchain",
+    "ArweavesPermanentLibraryOfAlexandria",
+    "AndreessenHorowitzUnionSquareVenturesa16z",
+    "AndreessenHorowitz16032020CoinbaseVentures",
+)
 
 _CT_RAW = base64.b64decode(oracle.CIPHERTEXT_B64)
 _SALT, _BODY = _CT_RAW[8:16], _CT_RAW[16:]
@@ -207,6 +244,36 @@ def piece2_strings():
     return sorted(seen)
 
 
+def piece1_iq_tokens():
+    """Short IQ-test answers, not the six colour names concatenated."""
+    seen = set()
+    for s in P1_IQ:
+        seen.add(s)
+    return sorted(seen)
+
+
+def piece2_long_strings():
+    """2-3 atom investor/date/Forbes concatenations, plus a few headlines.
+
+    Filters: at most one date, at most one amount, at least one investor.
+    TitleCase only, matching the solved siblings' answer grammar.
+    """
+    investors = set(P2_INVESTORS)
+    dates = set(P2_DATES)
+    amounts = set(P2_AMOUNTS)
+    atoms = P2_INVESTORS + P2_DATES + P2_FORBES + P2_AMOUNTS
+    seen = set(P2_HEADLINES)
+    for k in (2, 3):
+        for combo in itertools.permutations(atoms, k):
+            n_date = sum(1 for a in combo if a in dates)
+            n_inv = sum(1 for a in combo if a in investors)
+            n_amt = sum(1 for a in combo if a in amounts)
+            if n_date > 1 or n_amt > 1 or n_inv < 1:
+                continue
+            seen.add("".join(combo))
+    return sorted(seen)
+
+
 def assemble(p1s, p2s, p3s, p4s):
     out = []
     seen = set()
@@ -279,10 +346,11 @@ def main():
     parser.add_argument("--limit", type=int, default=0, help="cap candidates (0 = all)")
     parser.add_argument(
         "--family",
-        choices=("all", "named-whale", "letters"),
+        choices=("all", "named-whale", "letters", "iq-long"),
         default="all",
         help="named-whale: Blue-only IQ answers and companies/species named after a whale; "
-             "letters: printed letter order instead of the Alien anagram",
+             "letters: printed letter order instead of the Alien anagram; "
+             "iq-long: short IQ piece-1 tokens with complementary-length investor concatenations",
     )
     args = parser.parse_args()
     if args.selftest:
@@ -315,6 +383,13 @@ def main():
         )
         p4 = ("IEANL", "ILEAN", "INEAL", "AELIN", "ieanl", "ilean")
         cands = assemble(p1, p2, ("2111011",), p4)
+    elif args.family == "iq-long":
+        cands = assemble(
+            piece1_iq_tokens(),
+            piece2_long_strings(),
+            ("2111011",),
+            ("Alien", "Aline"),
+        )
     else:
         cands = assemble(p1, p2, PIECE3, PIECE4)
     cands.sort()
