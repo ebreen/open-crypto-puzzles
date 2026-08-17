@@ -1360,22 +1360,22 @@
       ],
       "target_format": "raw 32-byte / 64-hex secp256k1 private key, standard ETH address derivation, no mnemonic, no keystore",
       "derivation": {
-        "summary": "extract a 256-bit value from the pixel content of the published PNG (channel, order, and quantization not yet determined) and compare its ETH address to the escrow address; consecutive LSB of grayscale and alpha is ruled out",
+        "summary": "extract a 256-bit value from the pixel content of the published PNG (channel, order, and quantization not yet determined) and compare its ETH address to the escrow address; consecutive LSB, raw gray windows, and 16x16-style LSB/ink tiles are ruled out",
         "oracle": "tools/oracle.py",
         "oracle_certified": true,
         "certified_against": "secp256k1 private key 1, and solved sibling Arweave Puzzle #13 (published already-spent key, write-up 2020-06-10); this certifies hex-to-address only, not image-to-key"
       },
       "difficulty_left": "insight",
-      "difficulty_note": "the target format (raw private key, not a mnemonic) and the decoy (the address printed in the file's tEXt chunk) are both confirmed; close to 1,000 direct encodings of the measured geometry and the metadata anomaly have been tested, all negative; a witnessed LSB scan of 16,766,064 sliding 32-byte windows plus 3,768 prefix candidates is also negative; the remaining missing piece is a visual reading of the drawing that is not consecutive LSB, or the never-delivered author hint",
+      "difficulty_note": "the target format (raw private key, not a mnemonic) and the decoy (the address printed in the file's tEXt chunk) are both confirmed; close to 1,000 direct encodings of the measured geometry and the metadata anomaly have been tested, all negative; a witnessed LSB scan of 16,766,064 sliding 32-byte windows plus 3,768 prefix candidates is also negative; a witnessed raw-gray and 2D-tile scan of 23,830,902 windows plus 2,803 thumbnail candidates is also negative; the remaining missing piece is a hatch or value-band reading that yields hex text, or the never-delivered author hint",
       "tested_total": {
-        "candidates": 16766064,
-        "families": 5,
+        "candidates": 40596966,
+        "families": 7,
         "certified": false
       },
       "leads": [
         {
           "rank": 1,
-          "title": "visual hatch or building encoding that is not consecutive LSB",
+          "title": "hatch or value-band reading that yields hex text, not a 32-byte pixel window",
           "cost": "insight",
           "status": "open"
         },

@@ -11,8 +11,10 @@ geometry precisely (12 buildings, 1 large sailboat, 5 small sails) and its metad
 create-before-modify timestamp anomaly shared only with a sibling puzzle), and tested close to
 1,000 direct encodings of both against the target address, all negative. A witnessed LSB scan
 of the grayscale and alpha channels (16,766,064 sliding 32-byte windows plus 3,768 prefix
-candidates) is also negative. The hex-to-address transform is now a certified oracle; the
-exact pixel-level encoding that turns the drawing into 256 bits is still unknown.
+candidates) is also negative, as is a witnessed scan of raw gray windows, 2D LSB/ink
+tiles, and downsampled thumbnails (23,830,902 windows plus 2,803 thumbnail candidates).
+The hex-to-address transform is now a certified oracle; the exact pixel-level encoding
+that turns the drawing into 256 bits is still unknown.
 
 ## At a glance
 
@@ -28,7 +30,7 @@ exact pixel-level encoding that turns the drawing into 256 bits is still unknown
 | Puzzle type | image-stego, pixel-code, raw-private-key |
 | Target format | raw 32-byte / 64-hex secp256k1 private key, standard ETH address derivation, no mnemonic, no keystore |
 | Certified oracle | yes for hex-to-address: `tools/oracle.py --selftest` (private key 1, and Arweave Puzzle #13's published already-spent key). No for image-to-key: no solved sibling image exists. |
-| What remains | a visual reading of the drawing that is not consecutive LSB (hatch, skyline, value-band as text) |
+| What remains | a hatch or value-band reading that yields hex text, not a 32-byte pixel window |
 | Series | Arweave Puzzles (this folder covers puzzle #11 only) |
 
 ## The puzzle as published
@@ -121,16 +123,18 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Sibling-puzzle-#9-calibrated alpha channel carrier hypotheses | several hundred combinations | address comparison, calibrated against #9's real address | 0 match, 0 near-miss, and does not reproduce #9's known answer either | yes, on the #9 positive control only | 2026-06-13 |
 | Container-structure myths (embedded executable or filesystem) | full file | binwalk, chunk inspection | refuted: clean valid PNG | yes | 2026-06-13 |
 | Consecutive LSB / bit-plane readings of grayscale and alpha | 16,766,064 sliding 32-byte windows plus 3,768 prefix candidates | `tools/lsb_scan.py`, `tools/oracle.py` | 0 match, 0 hex64 string, 0 copy of the escrow address in packed bits | yes: head/middle/tail plants re-found | 2026-08-17 |
+| Raw gray windows, 2D LSB/ink tiles, and downsampled thumbnails | 23,830,902 sliding windows plus 2,803 thumbnail candidates | `tools/visual_scan.py`, `tools/oracle.py` | 0 match | yes: 8x4 raw plant and 16x16 LSB plant re-found | 2026-08-17 |
 
-Cumulative: on the order of 1,000 geometry and metadata candidates plus 16.8 million LSB
+Cumulative: on the order of 1,000 geometry and metadata candidates plus 40.6 million sliding
 windows, 0 matches, 0 near-misses under the `ff21` address-prefix check.
 
 ## Open leads, ranked
 
-1. **A visual hatch or building encoding that is not consecutive LSB** (insight). Consecutive
-   LSB of grayscale and alpha is ruled out (16,766,064 windows, 0 match, witnessed). What
-   remains is a reading of the drawing: hatch, skyline barcode, or a value-band rendered as
-   text. Confirmed if a 64-hex string from that reading derives the target exactly.
+1. **A hatch or value-band reading that yields hex text, not a 32-byte pixel window** (insight).
+   Consecutive LSB, raw gray windows, 2D LSB/ink tiles, and downsampled thumbnails are
+   ruled out (40,596,966 windows, 0 match, witnessed). What remains is a reading of the
+   drawing that produces 64 hex characters as text. Confirmed if a 64-hex string from
+   that reading derives the target exactly.
 2. **Join the community Telegram group and search first-hand for the promised hint** (needs a
    person). I already searched the full archived window (November 2021 to May 2026) and found
    nothing; what remains untested is anything from before the archive starts or outside its
@@ -149,12 +153,14 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `clues/author-posts.md` | the author's dated Twitter quotes, as reproduced by the community repository |
 | `data/geometry.json` | the 12 building bounding boxes, the sailboat bounding box, and the 5 small sail widths |
 | `data/lsb_scan.json` | stream counts, window counts, rate, and witness for the 2026-08-17 LSB scan |
+| `data/visual_scan.json` | window counts, rate, and witness for the 2026-08-17 raw-gray / 2D-tile / thumbnail scan |
 | `analysis/tested.md` | the complete negatives ledger |
 | `analysis/leads.md` | full notes behind the ranked leads |
 | `images/01-annotated-geometry.png` | the annotated geometry figure |
 | `tools/fig_geometry.py` | generates images/01-annotated-geometry.png from data/geometry.json |
 | `tools/oracle.py` | 64-hex private key to ETH address; `--selftest` against private key 1 and puzzle #13 |
 | `tools/lsb_scan.py` | prefix and sliding-window LSB extraction; `--selftest` plants head/middle/tail witnesses |
+| `tools/visual_scan.py` | thumbnails, raw gray windows, and 2D LSB/ink tiles; `--selftest` plants 8x4 raw and 16x16 LSB witnesses |
 
 ## Sources
 

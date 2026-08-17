@@ -1,0 +1,32 @@
+{
+  "_comment": "Counts from tools/visual_scan.py runs on clues/arweave-puzzle-11.png, 2026-08-17. Thumbnail pass unique candidates; raw pass sliding 32-byte windows of gray values and 2x16/4x8/8x4/16x2 tiles; tiles pass 16x16, 32x8 and 8x32 LSB and ink<110 bitmaps packed MSB-first. All used the same eth_tail transform as tools/oracle.py. 0 match in every row.",
+  "image": "clues/arweave-puzzle-11.png",
+  "image_size": [1600, 1105],
+  "target": "0xFF2142E98E09b5344994F9bEB9C56C95506B9F17",
+  "thumb_pass": {
+    "unique_candidates": 2803,
+    "matches": 0,
+    "date": "2026-08-17"
+  },
+  "raw_pass": {
+    "windows": 13508314,
+    "streams": ["xy", "yx", "xy_rev", "nonwhite", "ink110", "ink200"],
+    "tiles": ["2x16", "4x8", "8x4", "16x2"],
+    "matches": 0,
+    "rate_per_s": 60707,
+    "seconds": 222.5,
+    "backend": "coincurve-21.0.0 plus pycryptodome keccak",
+    "date": "2026-08-17"
+  },
+  "tile_pass": {
+    "windows": 10322588,
+    "shapes": ["16x16", "32x8", "8x32"],
+    "kinds": ["lsb", "ink110"],
+    "matches": 0,
+    "rate_per_s": 53289,
+    "seconds": 193.7,
+    "date": "2026-08-17"
+  },
+  "windows_total": 23830902,
+  "witness": "synthetic 32-byte key written as an 8x4 raw gray block and recovered; same key planted in LSB of a 16x16 tile and recovered by np.packbits"
+}

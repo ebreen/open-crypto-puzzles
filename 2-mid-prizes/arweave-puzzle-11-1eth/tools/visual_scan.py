@@ -15,7 +15,6 @@ is not printed.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import sys
@@ -114,26 +113,6 @@ def selftest() -> None:
     rec = pack_msb((tile & 1).reshape(-1))
     assert rec == secret
     print("SELFTEST OK")
-
-
-def slide_stream(data: bytes, source: str, seen: set[bytes]) -> bool:
-    for i in range(0, max(0, len(data) - 31)):
-        if consider(data[i : i + 32], f"{source}@{i}", seen):
-            return True
-    return False
-
-
-def hashes_of(data: bytes, source: str, seen: set[bytes]) -> bool:
-    for blob, tag in ((data, "all"), (data[:32], "head"), (data[-32:], "tail")):
-        if not blob:
-            continue
-        if consider(hashlib.sha256(blob).digest(), f"{source} {tag} sha256", seen):
-            return True
-        k = keccak.new(digest_bits=256)
-        k.update(blob)
-        if consider(k.digest(), f"{source} {tag} keccak", seen):
-            return True
-    return False
 
 
 def run_thumb() -> int:

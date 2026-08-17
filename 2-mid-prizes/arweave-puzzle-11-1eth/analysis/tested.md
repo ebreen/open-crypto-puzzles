@@ -62,13 +62,33 @@ This rules out a raw 32-byte private key stored as consecutive bits in those str
 does not rule out a passworded stego container, a non-consecutive bit order, or a visual
 encoding that is not LSB.
 
-## What the geometry, metadata, and LSB sweeps together rule out
+## Raw gray windows, 2D tiles, and downsampled thumbnails
+
+Raster LSB walks consecutive pixels in scan order. It does not walk raw 8-bit values as
+the 32-byte key, and it does not walk 2D tiles (a 16x16 LSB block is 256 bits that are
+not consecutive in the flattened raster). `tools/visual_scan.py` covers those, with
+counts in `data/visual_scan.json`.
+
+| Hypothesis | Space | Method | Result | Witness | Rate | Date |
+|---|---|---|---|---|---|---|
+| Downsampled thumbnails of the full image, the building band, and the sail, sizes 16x16 / 32x8 / 8x32 / 64x4 / 4x64 / 8x4 / 4x8 / 32x1 / 1x32, five resample filters, raw 32-byte form when the thumbnail has 32 pixels, otherwise ink/white packed at several thresholds; plus 32 equal-width mean strips | 2,803 unique 32-byte candidates | `tools/visual_scan.py --thumb` | 0 match | yes: `--selftest` recovers an 8x4 raw plant and a 16x16 LSB plant | n/a (small) | 2026-08-17 |
+| Every overlapping 32-byte window of raw gray values (xy, yx, reverse, non-white, ink<110, ink<200) and every 2x16 / 4x8 / 8x4 / 16x2 tile of raw gray | 13,508,314 windows | `tools/visual_scan.py --raw` | 0 match | yes: same 8x4 raw plant | 60,707 windows/s | 2026-08-17 |
+| Every overlapping 16x16, 32x8, and 8x32 tile of LSB and of ink<110, packed MSB-first with `np.packbits` | 10,322,588 windows | `tools/visual_scan.py --tiles` | 0 match | yes: same 16x16 LSB plant | 53,289 windows/s | 2026-08-17 |
+
+Cumulative for this family: 23,830,902 sliding windows plus 2,803 thumbnail candidates, 0 match.
+This rules out a raw 32-byte key stored as consecutive gray values in those streams, as a
+32-pixel 2D tile, or as a 256-bit 16x16 / 32x8 / 8x32 LSB or ink tile. It does not rule
+out a passworded stego container, a hatch-count cipher that is not a 32-byte window, or
+a value-band that renders as hex text.
+
+## What the geometry, metadata, LSB, and visual-scan sweeps together rule out
 
 The geometry and metadata families together covered on the order of 1,000 candidates, 0
 match, 0 near-miss. The LSB family covered 16,766,064 sliding windows plus 3,768 prefix
-candidates, 0 match. Together these rule out every direct single-transform reading of
-the measured geometry and the metadata anomaly that I enumerated, and they rule out a
-raw 32-byte key stored as consecutive bits in the listed grayscale and alpha streams.
-They do not rule out a passworded stego container, a non-consecutive bit order, a visual
-hatch encoding, or a reading that depends on the promised but never-delivered "$100"
-hint (see "Open leads, ranked").
+candidates, 0 match. The visual-scan family covered 23,830,902 sliding windows plus 2,803
+thumbnail candidates, 0 match. Together these rule out every direct single-transform
+reading of the measured geometry and the metadata anomaly that I enumerated, a raw
+32-byte key stored as consecutive bits or consecutive gray values in the listed streams,
+and a 16x16-style LSB or ink tile. They do not rule out a passworded stego container, a
+hatch or value-band reading that yields hex digits as text, or a reading that depends on
+the promised but never-delivered "$100" hint (see "Open leads, ranked").
