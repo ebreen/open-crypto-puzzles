@@ -8,8 +8,8 @@ paid out to real solvers. I confirmed the carrier for this one is not the audio,
 "Bifurcations": it is a POAP badge image showing a clock face laid over the full alphabetical
 BIP39 wordlist as wrapped text, where each hour's numeral marks a word and the 12 hours give
 the order. 3 of the 12 hours read with no ambiguity; the other 9 are pinned to about 3
-candidate words each because a numeral spans roughly 2 text rows on the only resolution the
-image exists at. Over 3.3 million candidate 12-word combinations have been tested against the
+candidate words each because a numeral spans 5 to 7 text rows on the only resolution the
+image exists at. Over 19.1 million candidate 12-word combinations have been tested against the
 winner wallet, all negative, and no higher-resolution source of the image is known to exist.
 
 ## At a glance
@@ -21,12 +21,12 @@ winner wallet, all negative, and no higher-resolution source of the image is kno
 | Prize | 0.55 ETH held by the prize contract (about $1,034 at ETH = $1,880, 2026-08-16) |
 | Chain | base |
 | Escrow | `0x831102C7eb86f9EC8f79dF891bDeA187D54344Dd` ([explorer](https://basescan.org/address/0x831102C7eb86f9EC8f79dF891bDeA187D54344Dd)) |
-| Last on-chain check | 2026-08-16: contract holds 0.55 ETH, winner wallet `0x635739254BDE27d28301f25aD57c3cAC3C3468f3` still at dust balance (0.006404376568548341 ETH) and outgoing transaction count 2, unchanged since the prior check |
+| Last on-chain check | 2026-08-17: prize contract holds 0.551 ETH (`551000000000000000` wei), funded and unspent; winner wallet `0x635739254BDE27d28301f25aD57c3cAC3C3468f3` is still the only address `withdraw()` accepts |
 | Status | OPEN |
 | Puzzle type | image-stego, bip39-seed, word-selection, smart-contract |
 | Target format | BIP39 12 words (English), BIP44 `m/44'/60'/0'/0/0`, no passphrase, address must equal the winner wallet |
 | Certified oracle | yes: `tools/oracle.py --selftest` (certified against the public BIP39 KAT address and the artist's prior solved "Bifurcations" BIP84 vector) |
-| What remains | resolving the exact word for 9 of the 12 clock hours, each currently narrowed to about 3 candidates by a row-position ambiguity on the published image |
+| What remains | a selector other than "the word under the clock numeral" and other than the artist-name / track-title / DKC2 substitutions: those families are closed; sunburst-ray length still has no certified readout |
 | Series | none |
 
 ## The puzzle as published
@@ -36,7 +36,9 @@ The album has 12 tracks, listed exactly as published in the NFT's own metadata i
 from the puzzle page. A POAP badge tied to the launch, drop "PowerfulMoss By LogicBeach.eth" (drop
 id 183468, created 2025-01-10), carries the puzzle's real artwork: a clock face with 12 serif
 numerals laid over the complete alphabetical BIP39 wordlist rendered as wrapped monospace
-text, plus a 24-ray red sunburst and a cursive signature. The prize contract's own getters
+text, plus a 24-ray red sunburst, a labeled ±5/±10 grid whose origin sits on the word `road`,
+and a yellow overlay that is the block letters `POWERFUL MOSS` plus a cursive `LOGIC BEACH`.
+The prize contract's own getters
 report a start time of 2025-01-17 20:00 UTC, a minimum claimable amount of 0.25 ETH, and a pot
 that grows toward the contract's full balance over time; an early withdrawal forfeits the
 remainder to the contract's creator. Full quotes and links in `clues/author-posts.md`.
@@ -55,8 +57,9 @@ wordlist in alphabetical order, wrapped as monospace text at a measured row pitc
 across 39 rows; the 12 clock numerals sit at measured centroid positions around a calibrated
 center, and the word each numeral overlays is read as that hour's candidate word. The row a
 numeral falls on can only be pinned to within 1 row on the published 2004x2011 raster, since the
-numeral glyphs themselves span roughly 2 rows: this is a resolution limit of the only image that
-exists, not a gap in the analysis.
+numeral glyphs themselves span 5 to 7 text rows: this is a resolution limit of the only image
+that exists, not a gap in the analysis. The yellow overlay is `POWERFUL MOSS` in block letters
+and `LOGIC BEACH` in cursive; `logic` and `beach` are BIP39 words, `moss` is not.
 
 ### Derivation and oracle
 
@@ -83,11 +86,9 @@ BTC in that prior puzzle. Reproduced 2026-08-16.
 
 ### Established facts
 
-1. The prize contract holds 0.55 ETH and the winner wallet remains at a dust balance with an
-   unchanged outgoing transaction count, checked via `eth_getBalance` and
-   `eth_getTransactionCount` against a public Base RPC endpoint on 2026-08-16. The pot grew
-   from 0.54 to 0.55 ETH since the prior check, consistent with the contract's own time-based
-   growth mechanism rather than a partial claim.
+1. The prize contract holds 0.551 ETH, checked via `eth_getBalance` against a public Base RPC
+   endpoint on 2026-08-17 (`551000000000000000` wei, funded and unspent). The pot is still
+   growing toward the contract's full balance; nothing has been withdrawn.
 2. The prize is a contract balance, not a plain wallet: `eth_getBalance` must be read on the
    contract address, not on the winner wallet or the artist's separate `owner()` address, which
    controls minting and metadata only, not the pot.
@@ -117,21 +118,27 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Asymmetric row window per ordering | 531,441 combinations per ordering | same oracle | 0 match | yes | 2026-06-17 |
 | Wider row window refinement | about 8.6e8 estimated, sampled | same oracle | 0 match on sample | yes | 2026-06-17 |
 | Distinct-overlay and higher-resolution-source hypotheses | full image | histogram analysis, source hunt | both refuted | yes | 2026-06-17 |
+| Bottom-of-numeral and outer-rim re-reads, plus or minus 1 row, 4 orderings | 2,125,764 combinations each | visual re-read, then BIP44 `m/44'/60'/0'/0/0` | 0 match | yes | 2026-08-17 |
+| Widen one hour at a time to a 5-to-7-word column window | 2,781,864 combinations across 12 runs | 9-path oracle sweep | 0 match | yes | 2026-08-17 |
+| Published pools plus 16 overlay / artist-name passphrases | 1,259,712 combinations | BIP44 `m/44'/60'/0'/0/0` with passphrase | 0 match | yes | 2026-08-17 |
+| One BIP39 token per track title, 4 orderings | 1,152 combinations | 9-path sweep | 0 match | yes | 2026-08-17 |
+| `logic` and `beach` as mnemonic words (prefix, suffix, replace one hour, replace two hours) | 3,009,312 combinations | 9-path on the smaller families; canonical path on the two-hour replace | 0 match | yes | 2026-08-17 |
+| Spaced passphrases `logic beach` / `Logic Beach` / `LOGIC BEACH` on the published pools | 236,196 combinations | BIP44 `m/44'/60'/0'/0/0` | 0 match | yes | 2026-08-17 |
+| First 12 regular DKC2 level titles, one BIP39 token each | 288 combinations | 9-path sweep | 0 match | yes | 2026-08-17 |
+| Bottom-pixel and outer-rim pools, 9-path residual | 4,251,528 combinations | 9-path sweep | 0 match | yes | 2026-08-17 |
+| POAP LSB / bit-planes as a 12-word ASCII BIP39 run | 4 channels, 8 red planes, column-major | pack bits and require 12 consecutive BIP39 tokens | 0 runs | yes (planted payload recovered from a copy) | 2026-08-17 |
 
-Cumulative: over 3.3 million candidate combinations tested against the winner wallet, 0
+Cumulative: over 19.1 million candidate combinations tested against the winner wallet, 0
 matches. Lyric tokens on 2 tracks were deliberately not fed to the oracle: no mechanism selects
 which 12 of them would be the seed, so this is untested rather than negative.
 
 ## Open leads, ranked
 
-1. **Re-run the grid enumeration at a wider row window, one doubtful hour at a time** (hours).
-   Start with the hours clipped at the frame edge. Confirmed if an opened hour yields a match;
-   killed for the numeral-overlay reading once every doubtful hour is widened with no match.
-2. **Resample at the numeral's bottom pixel instead of its centroid** (minutes). A cheap
-   re-measurement that changes the candidate set for some hours before repeating the same
-   4-ordering sweep.
-3. **Test the sunburst ray length as an alternative per-hour selector** (hours). The 24 rays
-   have measurably varying length, never tested as a selection or ordering signal.
+1. **Turn the sunburst rays into a per-hour word rule** (hours). The 24 rays have measurably
+   varying red-pixel counts, and the red overlay is a labeled ±5/±10 grid centered on `road`.
+   I still lack a witnessed wrap from pixel to word, so those measurements have not been fed
+   to the oracle. The numeral, artist-name, track-title, and DKC2 families are closed
+   (see analysis/tested.md).
 
 Full notes: [analysis/leads.md](analysis/leads.md).
 
@@ -144,7 +151,7 @@ Full notes: [analysis/leads.md](analysis/leads.md).
 | `data/tracks.json` | the album's 12 track titles, exactly as published in the NFT metadata |
 | `data/seed-grid.json` | the 12-hour seed grid state (confirmed words, candidate words) |
 | `analysis/tested.md` | the complete negatives ledger |
-| `analysis/leads.md` | full notes behind the 3 ranked leads |
+| `analysis/leads.md` | full notes behind the remaining lead |
 | `images/01-seed-grid.svg` | the seed grid figure |
 | `tools/oracle.py` | candidate checker, BIP44 path sweep, certified |
 | `tools/fig_seed_grid.py` | generates images/01-seed-grid.svg from data/seed-grid.json |

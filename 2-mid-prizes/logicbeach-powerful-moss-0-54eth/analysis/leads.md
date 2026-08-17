@@ -1,32 +1,38 @@
 # Open leads, ranked
 
-## 1. Re-run the grid enumeration at a wider row window, one doubtful hour at a time (hours)
+## 1. Turn the sunburst rays into a per-hour word rule (hours)
 
-A serif numeral spans about 2 text rows on the published raster, so the true row for some hours
-may be 2 rows away from the numeral's centroid, not 1. Opening the window to plus-or-minus 2 on
-all 12 hours at once would multiply the space far past what is practical to check, so the right
-next step is to widen only the hours whose reads look weakest, starting with the ones clipped at
-the image's circular frame edge, one at a time. Confirms: any opened hour turns up a match under
-one of the 4 canonical orderings. Kills: widening every doubtful hour individually with no match
-closes this specific readout rule (numeral-overlays-word) as the answer.
+The 24 sunburst rays have measurably varying red-pixel counts (about 604 to 947 along a
+unit-spaced walk from the center). The last red pixel on most rays sits at nearly the same
+radius (about 990 px); the 3-o'clock ray is the outlier, ending at 830 px. The red overlay
+is also a labeled Cartesian grid: ticks at ±5 and ±10, origin on the word `road` at the
+hub. I still do not have a wrap model that maps an (x, y) on this plot to the BIP39 word
+under that pixel: a character-width packer fitted to 11 visual anchors only re-found the
+two words at twelve o'clock on the plot. Until that readout is certified, ray length
+and the ±5/±10 lattice cannot be turned into a 12-word candidate and fed to the oracle.
+Confirms: a per-hour selection rule based on ray length or lattice point, fed through the
+oracle, matches. Kills: a systematic pass over those rules with no match, after the wrap
+or a visual read of all 12 sample points is itself witnessed.
 
-## 2. Resample at the numeral's bottom pixel instead of its centroid (minutes)
+## Closed on 2026-08-17
 
-The current model samples each numeral's centroid; because the glyph itself is tall, the
-intended word may sit under its lowest pixel rather than its middle. This is a cheap
-re-measurement, not a new brute-force pass: re-reading all 12 hours this way changes at most a
-few candidates per hour before the same 4-ordering oracle sweep is repeated. Confirms: the new
-reads produce a match. Kills: the same 4-ordering sweep on the new reads, run to completion,
-with no match.
+- **Numeral bottom pixel, plus or minus 1 row, 4 orderings.** 2,125,764 combinations, 0
+  match. Re-run on 2026-08-17 through the 9-path neighbor sweep: still 0 match.
+- **Outer-rim pixel, plus or minus 1 row, 4 orderings.** Same size, 0 match, including the
+  later 9-path residual.
+- **Widen one hour at a time** to a 5-to-7-word column window, every other hour held at the
+  published pool, all 12 hours, 9-path sweep, 0 match.
+- **Overlay / artist-name passphrases** on the published centroid pools (the original 16
+  strings, then the spaced `logic beach` / `Logic Beach` / `LOGIC BEACH`), 0 match.
+- **`logic` and `beach` as mnemonic words** (prefix, suffix, replace one hour, replace two
+  hours), 0 match.
+- **One BIP39 token per album track title**, 4 orderings, 0 match.
+- **First 12 regular DKC2 level titles**, one BIP39 token each, 4 orderings, 0 match.
+- **POAP LSB / bit-planes as a 12-word ASCII BIP39 run.** Extractor recovers a planted
+  payload from a copy of the image; the real file has no such run.
 
-## 3. Test the sunburst ray length as an alternative per-hour selector (hours)
-
-The 24 sunburst rays on the plot have measurably varying lengths. The current model assumes the
-word is chosen by which numeral it sits under; ray length has never been tested as an
-alternative or additional selector, and it could also supply an independent ordering signal
-apart from the clock position. Confirms: a per-hour selection rule based on ray length, fed
-through the oracle, matches. Kills: a systematic pass over ray-length-based selection rules with
-no match, though this space is less bounded than the row-window leads above and would need its
-own scoping before a run.
+Opening several hours at once to plus-or-minus 2 remains untested: 5^9 times 4 orderings is
+about 7.8 million combinations and, with the 9-path sweep, sits above the two-hour cap. That
+is a compute problem only if a new constraint first cuts the set.
 
 Full ledger: [tested.md](tested.md).
