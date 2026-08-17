@@ -132,12 +132,14 @@ Full ledger in [analysis/tested.md](analysis/tested.md). Summary:
 | Acrostic (initials spell a word) (L-003) | 1,723 composable 12-letter words | subsequence test against the 70 initials | 36 realizable, 0 match | uncertified: self-tested but no formal witness | 2026-08-02 |
 | Spoken 369 / drop-mad / two-column / keyword readings (L-007) | 9,513 unique ordered sequences | AP periods 1-12, take-skip 3/6/9, 6x12 two-column, title-to-column, wrap-line control | 643 checksum-valid, 0 match | yes: constructed take-3-skip-6-take-9 and wrap-line sequences re-found and oracle-checked | 2026-08-17 |
 | Self-referential and keyed jump walks (L-008) | 5,808 unique sequences | jump by token length / letters / 369 keys / greedy knight | 388 checksum-valid, 0 match | uncertified: certified oracle, no planted MATCH in this family's search order | 2026-08-17 |
+| Speakable row-block and alt-stream readings (L-009) | 7,560 unique sequences | first/last/middle n of m rows, same columns of speakable row groups, half-card 6+6, 6x2 paths, boustrophedon and column-major 369 walks | 466 checksum-valid, 0 match | yes: constructed first-two, 3-6-9-of-long-rows, and wrap-line sequences re-found | 2026-08-17 |
+| Constrained per-row pair orders and 369 windows (L-010) | 5,203,141 generated sequences (312,753 checksum-valid unique) | 6! times 2^6 orders of 13 pair-types; exhaustive same-column takes; within-row orders of 3- and 4-column 369 windows | 0 match | yes: planted wrap-line-first sequence recovered, oracle NO MATCH | 2026-08-17 |
 
-Cumulative: about 480 million objects enumerated across 7 families (mixed units:
+Cumulative: about 485 million objects enumerated across 9 families (mixed units:
 orderings, readings, selections, criteria, acrostic candidates), 0 matches.
 
-![Horizontal log-scale bars for the 7 tested-hypothesis families, colored by witness status](images/02-coverage-tested-space.png)
-*Figure 2. Coverage of the 7 tested hypothesis families, sized by objects enumerated and colored by witness status (source: data/coverage.csv, script tools/fig_coverage.py), 2026-08-17.*
+![Horizontal log-scale bars for the 9 tested-hypothesis families, colored by witness status](images/02-coverage-tested-space.png)
+*Figure 2. Coverage of the 9 tested hypothesis families, sized by objects enumerated and colored by witness status (source: data/coverage.csv, script tools/fig_coverage.py), 2026-08-17.*
 
 ## Open leads, ranked
 
@@ -150,15 +152,18 @@ orderings, readings, selections, criteria, acrostic candidates), 0 matches.
    rather than selection, and Keysa's reply engages with counting permutations
    rather than correcting the framing. Checking one full 12! ordering sweep for a
    well-argued candidate set costs about 38 seconds on a rented GPU; the bottleneck
-   is proposing the candidate set, not the derivation.
-3. **The two-tokens-per-row bounded sweep** (about 76 minutes on one rented GPU).
-   With the 6 rows confirmed authorial, picking exactly 2 tokens per row gives about
-   3.6 billion candidates after the BIP39 checksum filter, at a measured rate of
-   about 790,000 derivations per second.
+   is proposing the candidate set, not the derivation. The first-and-last-of-each-row
+   set is weaker than it looked: card order and the 6! times 2^6 pair-grouped orders
+   are all negative or checksum-invalid (L-007, L-010).
+3. **The two-tokens-per-row independent sweep** (about 76 minutes on one rented
+   GPU). Same-column two-per-row, including every column pair on all six rows, is
+   now a negative (L-009, L-010). What remains is picking any 2 tokens per row,
+   about 3.6 billion candidates after the checksum filter.
 4. **The double-width gap after "mad," and the "369 clock" theme** (needs new
    information). The note is titled "369369 Sats Guessing Game"; the obvious spoken
-   369 selectors (take 3 skip 6 take 9, every 3rd from 3, columns 3 and 6) are now
-   negatives in card order. The gap after `mad` likewise has no working selector yet.
+   369 selectors (take 3 skip 6 take 9, every 3rd from 3, columns 3 and 6, 3-6-9 of
+   the long rows, reward-epoch skip 6-3) are now negatives in card order. The gap
+   after `mad` likewise has no working selector yet.
 
 ## Files in this folder
 
@@ -170,11 +175,11 @@ orderings, readings, selections, criteria, acrostic candidates), 0 matches.
 | `clues/Q0aXztimD5PbhDUQ.jpg` | 2024-11-12 BlueWallet screenshot, "Crack the Seed Game HD SegWit..." |
 | `clues/author-posts.md` | dated quotes from Keysa's public posts, with links |
 | `data/card-tokens.txt` | my transcription of the 70-token card, 6 rows, dots marked |
-| `data/coverage.csv` | counts and witness status for the 7 tested hypothesis families |
+| `data/coverage.csv` | counts and witness status for the 9 tested hypothesis families |
 | `analysis/tested.md` | the complete negatives ledger |
 | `analysis/leads.md` | full notes behind the 4 ranked leads |
 | `images/01-annotated-card-grid.png` | the published card plus a rendered transcription with dotless tokens outlined |
-| `images/02-coverage-tested-space.png` | coverage bar chart of the 7 tested hypothesis families |
+| `images/02-coverage-tested-space.png` | coverage bar chart of the 9 tested hypothesis families |
 | `tools/oracle.py` | candidate checker, certified against the public BIP39/BIP84 test vector |
 | `tools/fig_card_grid.py` | generates images/01-annotated-card-grid.png from clues/L9rQ.jpg and data/card-tokens.txt |
 | `tools/fig_coverage.py` | generates images/02-coverage-tested-space.png from data/coverage.csv |

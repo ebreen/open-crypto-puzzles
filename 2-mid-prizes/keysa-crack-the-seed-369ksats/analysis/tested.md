@@ -217,3 +217,74 @@ pixels) is far larger than the next word would have needed (129 to 196 pixels). 
 automatic reflow never leaves that much room unused, so the 6 logical rows are
 typed line breaks, not a rendering side effect. This supports treating row-based
 rules (two words per row, columns, diagonals) as legitimate rather than coincidental.
+
+## L-009: speakable row-block and alternative-stream ordered readings
+
+A cipher told out loud to a trusted person should yield the 12 words in seed
+order from the six typed rows, not from a linear every-k walk of the 70-token
+stream (already covered in L-002 and L-007). This family enumerates those
+ordered readings: first, last, middle, or skip-first n tokens of m rows where
+n times m is 12; the same two, three, or four columns of speakable row groups
+(all six, the four long rows, consecutive windows, odd or even rows); half-card
+6+6 concatenations with matching or mixed 369-shaped rules on each half; path
+readings of the 6x2 first-and-last matrix; arithmetic periods 1-12, take-skip
+369, and accumulating 369/date/vortex keys on boustrophedon, column-major,
+spiral, row-reversed, and bottom-up streams (LTR periods 1-12 left to L-007);
+and first/last of groups sized 3-6-9.
+
+Method: generate those ordered 12-word sequences, checksum-filter, derive
+BIP84 `m/84'/0'/0'/0/0` with the certified oracle. N = 7,560 unique sequences,
+about 1/16 checksum-valid, t well under two hours.
+
+Result: 7,560 unique sequences, 466 checksum-valid, 0 address matches. Rate:
+about 650 checksum-valid derivations per second on 4 CPU cores through
+`tools/oracle.py`. Date: 2026-08-17.
+
+Witness: the enumerator re-found constructed sequences (first two of each row;
+last two of each row; columns 3 and 6 of all six rows; columns 3, 6, 9 of the
+four long rows; columns 3, 6, 9, 12 of the first three rows; firsts-then-lasts;
+the 12 wrap-line-first words from the 2024 screenshot) in its own candidate
+set. The public BIP84 test vector still derives
+`bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu`. I treat this family as witnessed
+for the ordered readings that were explicitly recovered.
+
+A follow-up on the same streams checked every contiguous 12-token window and
+the reward-epoch skip key 6-3 from the "Satoshi's Numbers 369 Clock" chapter
+(alternating digital roots 6, 3, 6, 3). 718 unique sequences, 41
+checksum-valid, 0 matches. The first typed row as a contiguous seed is
+checksum-invalid, so it cannot be the BlueWallet mnemonic.
+
+## L-010: constrained orders of per-row pairs and 369 column windows
+
+If the cipher names a pair of columns on each line, a trusted person might
+still permute line order or flip the pair. That shrinks 12! to 6! times 2^6 =
+46,080 orders per pair-type, about 8 seconds of derivations after the checksum
+filter, so I ran it rather than leaving it for a GPU 12! sweep. I also
+exhausted every same-k-column take on speakable row groups (k=2 on all six
+rows, k=3 on four-row windows, k=4 on three-row windows, k=6 on two-row
+windows), and the within-row permutations of a short list of 369-shaped 3- and
+4-column takes.
+
+Method: for 13 pair-types (first-and-last, first two, last two, middle two,
+columns 3+6, 3+9, 6+9, 3+last, 6+last, 9+last, 1+6, 1+9, skip-first-then-two),
+enumerate every row permutation and every per-row pair flip; union with the
+same-column exhaustive takes and with (3!)^4 times 4! (resp. (4!)^3 times 3!)
+orders of themed 3-column (resp. 4-column) windows. Checksum-filter, then the
+certified oracle. N_raw = 5,203,141 generated 12-word sequences, N_valid =
+312,753 unique checksum-valid, D about 3,600 derivations per second, t about
+87 seconds.
+
+Result: 312,753 checksum-valid unique sequences, 0 address matches. Date:
+2026-08-17.
+
+Witness: the public BIP84 vector still derives the standard address. I planted
+the checksum-valid 2024 wrap-line-first sequence in this family's candidate
+set, recovered it, and got NO MATCH from the same `check()` path (it derives
+`bc1qmvzlhq3ywxvclaz90czthdm2sz0qdqefexdkxy`, not the escrow). Card-order
+first-and-last remains checksum-invalid, as in L-007.
+
+If the 12 words are the first and last of each row, they are not grouped as
+six pairs in any line order. A full 12! of that set is still unrun here
+(t a little over two hours on this CPU). Same-column two-per-row in a
+speakable reading order is now a negative, including the 3-6-9 takes on the
+four long rows.

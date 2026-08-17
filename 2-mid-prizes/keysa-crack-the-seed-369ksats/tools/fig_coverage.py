@@ -51,7 +51,7 @@ def main():
     ]
 
     plt.rcParams["font.family"] = "DejaVu Sans"
-    fig, ax = plt.subplots(figsize=(9, 4.2), dpi=150)
+    fig, ax = plt.subplots(figsize=(9, 5.4), dpi=150)
     bars = ax.barh(labels, counts, color=colors)
     ax.set_xscale("log")
     ax.set_xlabel("objects enumerated (log scale)")

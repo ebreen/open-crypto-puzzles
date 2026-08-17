@@ -39,8 +39,11 @@ a well-reasoned candidate set of 12 tokens, not the derivation.
 
 The best remaining set for this lead, if the 12 words are meant to be obvious from
 the six typed rows, is still the first and last token of each row. Card order,
-firsts-then-lasts, and lasts-then-firsts are all checksum-invalid (L-007), so if
-this is the set, the order is not a plain row reading.
+firsts-then-lasts, and lasts-then-firsts are all checksum-invalid (L-007). Every
+6! times 2^6 grouping of those six pairs (any line order, any pair flip) is now
+a negative too (L-010), so if this is the set, the order mixes across rows and
+needs a full 12! on a GPU. I would put less weight on this set than I did
+before L-010.
 
 What would confirm it: any 12-token candidate set whose full 12! ordering sweep,
 run through `tools/oracle.py --stdin`, returns a MATCH.
@@ -54,20 +57,24 @@ candidates, not derivation.
 
 The 6 rows are confirmed to be typed line breaks rather than a display artifact
 (see the row-structure measurement in `analysis/tested.md`), which makes any rule
-defined per row a legitimate candidate family. One specific rule not yet fully
-covered by the positional sweep in L-002 is: pick exactly 2 of the tokens from each
-row, in some order, giving 12 tokens total. The space is C(12,2)^4 times C(11,2)^2,
-about 5.7e10 raw combinations of token pairs (rows of 12 tokens each contribute 66
-ways to choose 2, rows of 11 contribute 55), narrowing to about 3.6e9 after the
-BIP39 checksum filter (1 in 16). At the measured rate of about 790,000 derivations
-per second on one GPU, checking the checksum-valid subset costs about 76 minutes.
+defined per row a legitimate candidate family. Speakable same-column picks of
+exactly 2 tokens per row, including every pair of columns on all six rows in
+card order and in 6! times 2^6 pair-grouped orders, are now negatives (L-009,
+L-010). What remains of this lead is the independent-per-row case: pick exactly
+2 of the tokens from each row, not necessarily the same columns, in some order.
+The space is C(12,2)^4 times C(11,2)^2, about 5.7e10 raw combinations of token
+pairs (rows of 12 tokens each contribute 66 ways to choose 2, rows of 11
+contribute 55), narrowing to about 3.6e9 after the BIP39 checksum filter (1 in
+16). At the measured rate of about 790,000 derivations per second on one GPU,
+checking the checksum-valid subset costs about 76 minutes. That is no longer a
+spoken cipher; it is a brute-force of "two per line, any two."
 
 What would confirm it: a MATCH from `tools/oracle.py` on any candidate drawn from
-this space.
+this independent-per-row space.
 What would kill it: running the full checksum-filtered space to completion with 0
 matches, with a witness planted at the head, middle, and tail of the search order.
-Cost: about 76 minutes on one rented GPU; this is the best remaining
-information-to-cost ratio once leads 1 and 2 are exhausted.
+Cost: about 76 minutes on one rented GPU; same-column speakable orders are already
+spent, so this is brute force of "any two per line."
 
 ## 4. The double-width gap after "mad", and the "369 clock" theme
 
@@ -83,9 +90,11 @@ would put less weight on both.
 - The 2024 notes-app screenshot titles the card **369369 Sats Guessing Game**, so
   369369 is not just the prize amount; it is the name she gave the game. The most
   natural spoken readings of that name as a selector - take 3 skip 6 take 9, every
-  3rd token starting at 3, two columns from `{3,6,9,12}`, cycling 3-6-9 two per row -
-  are now negatives in card order (L-007). What remains of this lead is a 369-shaped
-  rule I have not yet stated, not the ones above.
+  3rd token starting at 3, two columns from `{3,6,9,12}`, cycling 3-6-9 two per row,
+  3-6-9 of the four long rows, 3-6-9-12 of three-row windows, and the reward-epoch
+  skip 6-3 from her own 369-clock chapter - are now negatives in card order
+  (L-007, L-009, L-010). What remains of this lead is a 369-shaped rule I have
+  not yet stated, not the ones above.
 
 What would confirm either: a specific selection rule derived from one of these
 observations that `tools/oracle.py` confirms.

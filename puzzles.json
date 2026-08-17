@@ -2414,10 +2414,10 @@
         "certified_against": "the public BIP39/BIP84 test vector (mnemonic 'abandon' repeated 11 times plus 'about'), since no solved sibling exists for this puzzle"
       },
       "difficulty_left": "insight",
-      "difficulty_note": "the derivation is fully understood and the mechanical and structural search space is thoroughly mapped (669,858 positional readings, 479,001,600 orderings of the 12 dotless tokens, 572,368 semantic selections, 105 intrinsic-property criteria, 36 acrostic selections, 9,513 spoken 369/drop-mad/two-column/keyword ordered readings, 5,808 self-referential jump walks, all negative); the note is titled 369369 Sats Guessing Game and the obvious spoken 369 selectors are now negatives in card order; the selection rule is described by the author as short, memorable, and meant to be spoken aloud to a trusted person, which argues the missing piece is an unrecovered insight or a fact only the author has stated, not more compute",
+      "difficulty_note": "the derivation is fully understood and the mechanical and structural search space is thoroughly mapped (669,858 positional readings, 479,001,600 orderings of the 12 dotless tokens, 572,368 semantic selections, 105 intrinsic-property criteria, 36 acrostic selections, 9,513 spoken 369/drop-mad/two-column/keyword ordered readings, 5,808 self-referential jump walks, 7,560 speakable row-block and alt-stream readings, 5,203,141 constrained per-row pair orders and 369 column windows, all negative); the note is titled 369369 Sats Guessing Game and the obvious spoken 369 selectors, including 3-6-9 of the long rows and the reward-epoch skip 6-3, are now negatives in card order; the selection rule is described by the author as short, memorable, and meant to be spoken aloud to a trusted person, which argues the missing piece is an unrecovered insight or a fact only the author has stated, not more compute",
       "tested_total": {
-        "candidates": 480259288,
-        "families": 7,
+        "candidates": 485469989,
+        "families": 9,
         "certified": false
       },
       "leads": [
@@ -2435,7 +2435,7 @@
         },
         {
           "rank": 3,
-          "title": "the two-tokens-per-row bounded sweep",
+          "title": "the two-tokens-per-row independent sweep (same-column speakable orders now negative)",
           "cost": "hours",
           "status": "open"
         },
