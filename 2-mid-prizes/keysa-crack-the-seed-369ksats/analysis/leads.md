@@ -32,9 +32,15 @@ treat the selection as easier to work out than the order.
 The practical consequence: for any well-argued candidate set of 12 tokens, checking
 every one of its 12! = 479,001,600 orderings costs about 38 seconds on a rented GPU
 (measured at about 0.79 million derivations per second), against 36.8 minutes on a
-CPU for the one set already tried in full (L-001, `analysis/tested.md`). The
-bottleneck for this lead is producing a well-reasoned candidate set of 12 tokens,
-not the permutation search itself.
+CPU for the one set already tried in full (L-001, `analysis/tested.md`). On a 4-core
+CPU at about 930 PBKDF2 per second per core, one set is a little over two hours, so
+I did not run a new 12! sweep here. The bottleneck for this lead is still producing
+a well-reasoned candidate set of 12 tokens, not the derivation.
+
+The best remaining set for this lead, if the 12 words are meant to be obvious from
+the six typed rows, is still the first and last token of each row. Card order,
+firsts-then-lasts, and lasts-then-firsts are all checksum-invalid (L-007), so if
+this is the set, the order is not a plain row reading.
 
 What would confirm it: any 12-token candidate set whose full 12! ordering sweep,
 run through `tools/oracle.py --stdin`, returns a MATCH.
@@ -65,22 +71,26 @@ information-to-cost ratio once leads 1 and 2 are exhausted.
 
 ## 4. The double-width gap after "mad", and the "369 clock" theme
 
-Two weaker, unresolved observations, neither of which is itself an actionable next
-step:
+Two weaker, unresolved observations. I now know more than when I ranked them, and I
+would put less weight on both.
 
-- The gap after the first token, `mad`, measures about 20 pixels, against 9 to 13
-  pixels for every other inter-word gap on the card (`analysis/tested.md`). This is
-  the only typographic anomaly on the card. It may mark a deliberate starting point,
-  or it may be an unrelated formatting choice; I have not derived a selection rule
-  from it to test.
-- Keysa's own book anchors the 369 theme in a real, author-owned passage (pages 126
-  to 127, "Satoshi's Numbers: 369 Clock"), which rules out the amount being purely
-  decorative, but no digital-root or modulo-9 based selector derived from this theme
-  has produced a match (L-004, L-005 in `analysis/tested.md`).
+- The gap after the first token, `mad`, is still the only typographic anomaly on the
+  card. Treating `mad` as a header and running the 69-token remainder through the
+  same spoken rules as the full card is a negative (L-007). Using `mad` as a letter
+  key (keep words whose first letter is in `{m,a,d}`) yields exactly 12 tokens, but
+  that set is a bad fit for a one-shot BlueWallet seed, and the obvious orders are
+  negative.
+- The 2024 notes-app screenshot titles the card **369369 Sats Guessing Game**, so
+  369369 is not just the prize amount; it is the name she gave the game. The most
+  natural spoken readings of that name as a selector - take 3 skip 6 take 9, every
+  3rd token starting at 3, two columns from `{3,6,9,12}`, cycling 3-6-9 two per row -
+  are now negatives in card order (L-007). What remains of this lead is a 369-shaped
+  rule I have not yet stated, not the ones above.
 
 What would confirm either: a specific selection rule derived from one of these
 observations that `tools/oracle.py` confirms.
 What would kill either: this is not a bounded space to exhaust; both stay open until
 a rule is proposed and tested, or until new information (most likely from lead 1)
 explains them.
-Cost: needs a new insight; no compute action is available on either today.
+Cost: needs a new insight; the obvious 369 and drop-`mad` spoken rules are already
+spent.

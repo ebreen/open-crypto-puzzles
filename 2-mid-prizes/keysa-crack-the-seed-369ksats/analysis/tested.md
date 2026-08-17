@@ -135,9 +135,74 @@ on that basis, while noting the volume of testing.
 A pixel-level measurement on the binarized card image found that the gap after the
 first token, `mad`, is about 20 pixels wide, while every other inter-word gap on the
 card measures 9 to 13 pixels. This is the single typographic anomaly on the entire
-card, and it falls on the very first token. It is not itself a tested hypothesis,
-since no selection rule based on it has been derived and checked; it remains an open
-observation (see the README's open leads).
+card, and it falls on the very first token. Ordered readings that treat `mad` as a
+header, and the letter-key reading that uses its three initials, are now in L-007;
+no rule based on the gap has matched.
+
+## L-007: spoken 369 / drop-mad / two-column / keyword ordered readings
+
+L-002 only enumerated periodic gaps with periods 1 to 4. The note title
+"369369 Sats Guessing Game" (visible on the 2024 screenshot, see
+`clues/author-posts.md`) and the extra-wide gap after `mad` both argue for a
+short spoken rule that that sweep would have missed: every-k for k = 5 to 12,
+the 69-token stream that drops `mad` as a header, take-then-skip using 3/6/9,
+two fixed columns of the 6x12 padded grid, and 12-letter titles mapped to
+columns.
+
+Method: generate those ordered 12-word readings (card order of the selected
+positions, plus reverse), checksum-filter, derive BIP84 `m/84'/0'/0'/0/0` with
+the certified oracle. Also checked the most natural 369 take-skip, "take 3,
+skip 6, take 9", from every start, and the twelve first-of-display-line words
+in the 2024 narrower screenshot (a width-dependent reading, included only as a
+control).
+
+Result: 5,965 unique sequences from the arithmetic / grid / keyword families
+plus 3,548 from the take-skip / wrap-line families, 643 checksum-valid after
+the 1-in-16 filter, 0 address matches. The flagship "take 3, skip 6, take 9"
+from the first token is checksum-invalid. Rate: about 650 checksum-valid
+derivations per second on 4 CPU cores through `tools/oracle.py`. Date:
+2026-08-17.
+
+Witness: the enumerator re-found the constructed "take 3, skip 6, take 9 from
+start 1" sequence and the 12 wrap-line-first sequence in its own candidate set
+and evaluated both through the same `check()` path as every other candidate;
+the public BIP84 test vector run through `derive_address()` still returns
+`bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu`. I treat this family as
+witnessed for the ordered readings that were explicitly recovered.
+
+A letter-keyed reading suggested by the gap after `mad` (keep every token
+whose first letter is in `{m,a,d}`, dropping `mad` itself) also yields exactly
+12 tokens. All obvious orders of that set fail the checksum or, in one
+grouping, derive a different address. I did not 12!-permute it: a one-shot
+BlueWallet seed is overwhelmingly unlikely to have all 12 words sharing those
+initials, so the cardinality-12 hit is almost certainly from the decoys, not
+the selector.
+
+## L-008: self-referential and keyed jump walks
+
+Method: from every starting index on the 70-token stream and the 69-token
+drop-`mad` stream, walk 12 steps wrapping or not, with the step size taken
+from the current token (length, vowel count, consonant count, first or last
+letter value, vocabulary index modulo 9 or 12) or from a constant 3/6/9, and
+from repeating skip keys `369`, `62523`, `124875`, `MAD` letter numbers, and
+`BITCOIN` / `TESLA` / `KEYSA` / `SATOSHI`. Also a greedy knight's-tour of
+length 12 on the padded 6x12 grid from every start.
+
+Result: 5,808 unique sequences, 388 checksum-valid, 0 address matches. Rate:
+about 650 checksum-valid derivations per second, same oracle. Date: 2026-08-17.
+
+Witness: the public BIP84 vector still derives the standard address through
+the same `derive_address()` used to score candidates. I did not plant a
+synthetic MATCH at head/middle/tail of this jump family separately from L-007,
+so I mark the jump family uncertified even though the derivation path is the
+certified oracle.
+
+Three checksum-valid themed readings (every 3rd token starting at 3; the 12
+wrap-line-first words from the 2024 screenshot; one grouping of the
+MAD-initial set) were also derived at BIP84 indices 0 to 5 and with
+passphrases `369`, `369369`, and `mad`. All NO MATCH. That extra-path check is
+a small control, not a passphrase search: she has said she learned about
+passphrases after this wallet was made.
 
 ## Row-structure measurement (not a hypothesis test)
 
