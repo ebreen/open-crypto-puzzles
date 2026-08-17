@@ -1991,7 +1991,7 @@
           "label": "main",
           "explorer": "https://etherscan.io/address/0xa468335485cE853F21A44451755bd88364e9d618",
           "expected": "166.000000 USDC",
-          "verified_on": "2026-08-16",
+          "verified_on": "2026-08-17",
           "verified_state": "funded-unspent"
         }
       ],
@@ -1999,25 +1999,37 @@
         "bip39-seed",
         "word-selection"
       ],
-      "target_format": "12 English BIP39 words, BIP44 Ethereum m/44'/60'/0'/0/0, no passphrase, order recoverable offline once the word set is known",
+      "target_format": "12 English BIP39 words, BIP44 Ethereum m/44'/60'/0'/0/0, no passphrase, order is game order",
       "derivation": {
-        "summary": "solve each of 12 independent mini-games to get one BIP39 word each, then derive the standard BIP44 first Ethereum address and compare it to the escrow",
+        "summary": "solve each of 12 mini-games to get one BIP39 word each, then derive the standard BIP44 first Ethereum address and compare it to the escrow",
         "oracle": "tools/oracle.py",
         "oracle_certified": true,
         "certified_against": "the public BIP39/BIP44 test mnemonic (12x 'abandon' plus 'about'); no author-published worked example exists for this season"
       },
       "difficulty_left": "insight",
-      "difficulty_note": "the derivation is certified and the site is fully mirrored; the author's own hint says most games share a common mechanic, likely a number used as a 1-2048 BIP39 index; 1 word is established with confidence (game 1) and a 2nd is a strong candidate (game 10)",
+      "difficulty_note": "the derivation is certified and the 12 game pages are mapped; the page-naming integers are not the seed; 0 of the 12 words are confirmed via the oracle; the author's later posts point at scores and Roman numerals as the common thread",
       "leads": [
         {
           "rank": 1,
-          "title": "identify the common mechanic across the 12 games (most likely: each yields a number used as a BIP39 wordlist index)",
-          "cost": "hours",
+          "title": "harvest the rest of the author's X posts (every post since 2026-07-16 is a Season 4 clue; the 2026-07-25 to 2026-08-15 window is missing without a login)",
+          "cost": "needs a person",
           "status": "open"
         },
         {
           "rank": 2,
-          "title": "solve the remaining games directly; the word order is a minor convenience, not a real lock, once the word set is known",
+          "title": "read each game as a number, then as a 1-based BIP39 index (the page names already use that convention)",
+          "cost": "hours",
+          "status": "open"
+        },
+        {
+          "rank": 3,
+          "title": "treat the corner tags as reading rules, especially the shared 5:30 on games 2 and 9",
+          "cost": "hours",
+          "status": "open"
+        },
+        {
+          "rank": 4,
+          "title": "game 11 as Roman numerals on the printed names or their dex numbers",
           "cost": "hours",
           "status": "open"
         }
@@ -2029,6 +2041,12 @@
           "title": "\"A new treasure hunt is live! (Something in common), 12 hidden words, 150 USDC to be won\"",
           "url": "https://x.com/FTPKgame/status/2077755138668671313",
           "date": "2026-07-16",
+          "archived": null
+        },
+        {
+          "title": "\"In Season 4, there is a hidden page to help you with Season 2\"",
+          "url": "https://x.com/FTPKgame/status/2079947035357102350",
+          "date": "2026-07-22",
           "archived": null
         },
         {
@@ -2044,9 +2062,33 @@
           "archived": null
         },
         {
-          "title": "\"In Season 4, there is a hidden page to help you with Season 2\"",
-          "url": "https://x.com/FTPKgame/status/2079947035357102350",
-          "date": "2026-07-22",
+          "title": "\"the number of cards in a deck is really well chosen\"",
+          "url": "https://x.com/FTPKgame/status/2088605776470286613",
+          "date": "2026-08-15",
+          "archived": null
+        },
+        {
+          "title": "\"Regarding the game of Pick-up sticks... I had to pick one\"",
+          "url": "https://x.com/FTPKgame/status/2088962735245574568",
+          "date": "2026-08-16",
+          "archived": null
+        },
+        {
+          "title": "\"Up for a bit of a challenge... aim to win $167\"",
+          "url": "https://x.com/FTPKgame/status/2088966091330445313",
+          "date": "2026-08-16",
+          "archived": null
+        },
+        {
+          "title": "\"Game 11, Roman numeral\"",
+          "url": "https://x.com/FTPKgame/status/2089331422410535207",
+          "date": "2026-08-17",
+          "archived": null
+        },
+        {
+          "title": "\"All the clues posted since the launch of Season 4 relate only to Season 4\"",
+          "url": "https://x.com/FTPKgame/status/2089348233541632343",
+          "date": "2026-08-17",
           "archived": null
         },
         {
@@ -2062,14 +2104,20 @@
           "archived": null
         },
         {
+          "title": "Season 2 hint page hosted on the Season 4 site",
+          "url": "https://findtheprivatekeys4.vercel.app/servicecricketgloomattendsupremejumpannualeagerpulpprojectdiseaseround.html",
+          "date": "2026-08-16",
+          "archived": null
+        },
+        {
           "title": "Escrow wallet, etherscan.io",
           "url": "https://etherscan.io/address/0xa468335485cE853F21A44451755bd88364e9d618",
-          "date": "2026-08-16",
+          "date": "2026-08-17",
           "archived": null
         }
       ],
       "third_party_material": "no images, audio, or video shipped; only short quoted author text and the site's own rule text are included",
-      "last_updated": "2026-08-16",
+      "last_updated": "2026-08-17",
       "folder": "2-mid-prizes/ftpk-season-4-166usdc"
     },
     {

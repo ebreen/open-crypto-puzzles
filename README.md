@@ -97,7 +97,7 @@ grouped by prize, is in the tables below.
 | [VeteranHODL: Hunting Time](2-mid-prizes/veteranhodl-hunting-time-420ksats/) | 420,000 sats | 265 | bitcoin | bip39-seed, book, word-selection | bounded-compute | 2026-08-16 | open |
 | [Keysa: Crack the Seed Game](2-mid-prizes/keysa-crack-the-seed-369ksats/) | 369,369 sats | 233 | bitcoin | bip39-seed, word-selection | insight | 2026-08-16 | open |
 | [Zden Level HALV](2-mid-prizes/zden-haluska-halv-312ksats/) | 312,500 sats | 197 | bitcoin | geometry, raw-private-key | external-info | 2026-08-16 | open |
-| [FTPK Season 4: Something in Common](2-mid-prizes/ftpk-season-4-166usdc/) | 166 USDC | 166 | ethereum | bip39-seed, word-selection | insight | 2026-08-16 | open |
+| [FTPK Season 4: Something in Common](2-mid-prizes/ftpk-season-4-166usdc/) | 166 USDC | 166 | ethereum | bip39-seed, word-selection | insight | 2026-08-17 | open |
 | [Pindar Van Arman: cryptoArtGAN Act 1 Puzzle](2-mid-prizes/pindar-van-arman-cryptoartgan-nft/) | 1 NFT |  | ethereum | bip39-seed, word-selection | insight | 2026-08-16 | open |
 
 ## Small prizes (< $100)
